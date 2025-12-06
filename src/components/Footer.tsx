@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Github, Linkedin, Mail, Heart } from "lucide-react";
 
 const Footer = () => {
@@ -27,9 +28,9 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo & Copyright */}
           <div className="flex flex-col items-center md:items-start gap-2">
-            <a href="#" className="text-xl font-heading font-bold text-foreground">
+            <Link to="/" className="text-xl font-heading font-bold text-foreground">
               Hardik<span className="text-primary">.</span>
-            </a>
+            </Link>
             <p className="text-sm text-muted-foreground flex items-center gap-1">
               © {currentYear} Made with <Heart className="w-3 h-3 text-primary" /> in India
             </p>
@@ -37,18 +38,18 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="flex items-center gap-8">
-            <a href="#about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               About
-            </a>
-            <a href="#skills" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            </Link>
+            <Link to="/skills" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Skills
-            </a>
-            <a href="#projects" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            </Link>
+            <Link to="/projects" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Projects
-            </a>
-            <a href="#contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            </Link>
+            <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Contact
-            </a>
+            </Link>
           </div>
 
           {/* Social Links */}
