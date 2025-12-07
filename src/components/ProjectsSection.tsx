@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { ExternalLink, Github, ArrowUpRight, Monitor, X, Maximize2, Minimize2 } from "lucide-react";
+import { ExternalLink, Github, Monitor, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,15 +9,13 @@ import {
 } from "@/components/ui/dialog";
 
 const ProjectsSection = () => {
-  const [expandedPreview, setExpandedPreview] = useState<string | null>(null);
-
   const projects = [
     {
       title: "hardik-dental",
       shortDesc: "Dental clinic management web app — appointments, patient records, basic billing.",
       tech: ["React", "Tailwind", "Node/Express", "MySQL"],
       github: "https://github.com/HardikQuantumCybernetic/hardik-dental",
-      liveUrl: "https://hardik-dental.lovable.app",
+      liveUrl: "https://secondlast.vercel.app/admin",
       caseStudy: {
         problem: "Streamline clinic workflows and reduce administrative overhead",
         solution: "Built an appointment scheduler, patient database, and role-based access control",
@@ -27,14 +24,26 @@ const ProjectsSection = () => {
     },
     {
       title: "kuber",
-      shortDesc: "Kubernetes tooling / orchestration helper with scripts and utilities to manage deployments.",
-      tech: ["Python", "Bash", "Docker", "kubectl"],
+      shortDesc: "Pure vegetarian restaurant website with menu and online ordering features.",
+      tech: ["React", "Tailwind", "JavaScript"],
       github: "https://github.com/HardikQuantumCybernetic/kuber",
-      liveUrl: "https://kuber-demo.lovable.app",
+      liveUrl: "https://kuberpureveg.netlify.app/",
       caseStudy: {
-        problem: "Simplify complex Kubernetes deployment workflows",
-        solution: "Created CLI utilities and reusable templates",
-        result: "Reduced deployment steps significantly",
+        problem: "Create an attractive online presence for a vegetarian restaurant",
+        solution: "Designed a modern, responsive website with menu showcase",
+        result: "Increased online visibility and customer engagement",
+      },
+    },
+    {
+      title: "portfolio",
+      shortDesc: "Personal portfolio website showcasing projects and skills with modern design.",
+      tech: ["React", "TypeScript", "Tailwind", "Vite"],
+      github: "https://github.com/HardikQuantumCybernetic/portfolio_",
+      liveUrl: "https://hardik-s-digital-studio.vercel.app/",
+      caseStudy: {
+        problem: "Showcase skills and projects in a professional manner",
+        solution: "Built a modern portfolio with live project previews and responsive design",
+        result: "Professional online presence for freelance opportunities",
       },
     },
   ];

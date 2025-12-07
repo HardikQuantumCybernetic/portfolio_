@@ -37,7 +37,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="flex items-center gap-8">
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
             <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               About
             </Link>
@@ -49,6 +49,9 @@ const Footer = () => {
             </Link>
             <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Contact
+            </Link>
+            <Link to="/hire-me" className="text-sm text-primary hover:text-primary/80 transition-colors font-medium">
+              Hire Me
             </Link>
           </div>
 

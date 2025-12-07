@@ -1,5 +1,6 @@
 import { ArrowRight, MapPin, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import hardikImage from "@/assets/hardik.jpg";
 
 const HeroSection = () => {
@@ -38,10 +39,10 @@ const HeroSection = () => {
                 className="gap-2 accent-gradient text-primary-foreground hover:opacity-90 glow-box"
                 asChild
               >
-                <a href="#contact">
+                <Link to="/hire-me">
                   Hire Me
                   <ArrowRight className="w-4 h-4" />
-                </a>
+                </Link>
               </Button>
               <Button
                 variant="outline"
@@ -49,7 +50,7 @@ const HeroSection = () => {
                 className="gap-2 border-border hover:border-primary hover:text-primary"
                 asChild
               >
-                <a href="#projects">See Projects</a>
+                <Link to="/projects">See Projects</Link>
               </Button>
               <Button
                 variant="ghost"
@@ -64,7 +65,7 @@ const HeroSection = () => {
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border">
               <div>
-                <div className="text-3xl font-heading font-bold text-primary">2+</div>
+                <div className="text-3xl font-heading font-bold text-primary">3+</div>
                 <div className="text-sm text-muted-foreground">Projects</div>
               </div>
               <div>
