@@ -15,11 +15,33 @@ const ContactSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to a backend
+    
+    // Validate inputs
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
+    
+    if (!name || !email || !message) {
+      toast({
+        title: "Please fill all required fields",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Create mailto link with form data
+    const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\nCompany: ${formData.company.trim() || "Not provided"}\n\nMessage:\n${message}`
+    );
+    
+    window.location.href = `mailto:hardikjadhav307@gmail.com?subject=${subject}&body=${body}`;
+    
     toast({
-      title: "Message sent!",
-      description: "Thanks for reaching out. I'll respond within 24–48 hours.",
+      title: "Opening email client...",
+      description: "Your email app will open with the message pre-filled.",
     });
+    
     setFormData({ name: "", email: "", company: "", message: "" });
   };
 
@@ -123,6 +145,7 @@ const ContactSection = () => {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   required
+                  maxLength={100}
                   className="bg-secondary border-border focus:border-primary"
                 />
               </div>
@@ -138,6 +161,7 @@ const ContactSection = () => {
                     setFormData({ ...formData, email: e.target.value })
                   }
                   required
+                  maxLength={255}
                   className="bg-secondary border-border focus:border-primary"
                 />
               </div>
@@ -153,6 +177,7 @@ const ContactSection = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, company: e.target.value })
                 }
+                maxLength={100}
                 className="bg-secondary border-border focus:border-primary"
               />
             </div>
@@ -169,6 +194,7 @@ const ContactSection = () => {
                   setFormData({ ...formData, message: e.target.value })
                 }
                 required
+                maxLength={1000}
                 className="bg-secondary border-border focus:border-primary resize-none"
               />
             </div>
