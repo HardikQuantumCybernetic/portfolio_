@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Mail, MessageCircle, Database, Globe, Palette, Server, Check, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import InteractiveCard from "@/components/InteractiveCard";
 
 const HireMe = () => {
   const services = [
@@ -37,6 +38,14 @@ const HireMe = () => {
     "Ongoing support available",
   ];
 
+  const handleWhatsAppClick = () => {
+    window.open("https://wa.me/918080950921", "_blank", "noopener,noreferrer");
+  };
+
+  const handleEmailClick = () => {
+    window.location.href = "mailto:hardikjadhav307@gmail.com?subject=Website%20Development%20Inquiry&body=Hi%20Hardik,%0A%0AI'm%20interested%20in%20your%20web%20development%20services.%0A%0APlease%20let%20me%20know%20more%20details.%0A%0AThanks!";
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -57,57 +66,55 @@ const HireMe = () => {
 
           {/* Pricing Card */}
           <div className="max-w-lg mx-auto mb-16 animate-fade-up delay-100">
-            <div className="relative p-8 rounded-2xl card-gradient border border-primary/50 glow-box">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-primary-foreground text-sm font-medium rounded-full">
-                Simple Pricing
-              </div>
-              
-              <div className="text-center pt-4">
-                <div className="flex items-baseline justify-center gap-1">
-                  <span className="text-5xl font-heading font-bold text-primary">$5</span>
-                  <span className="text-muted-foreground">USD</span>
+            <InteractiveCard>
+              <div className="relative p-8 rounded-2xl card-gradient border border-primary/50 glow-box">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-primary-foreground text-sm font-medium rounded-full">
+                  Simple Pricing
                 </div>
-                <p className="text-foreground font-medium mt-2">per page</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Hosting charges are separate
-                </p>
-              </div>
-
-              <div className="mt-8 space-y-3">
-                {features.map((feature, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
-                      <Check className="w-3 h-3 text-primary" />
-                    </div>
-                    <span className="text-foreground text-sm">{feature}</span>
+                
+                <div className="text-center pt-4">
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className="text-5xl font-heading font-bold text-primary">$5</span>
+                    <span className="text-muted-foreground">USD</span>
                   </div>
-                ))}
-              </div>
+                  <p className="text-foreground font-medium mt-2">per page</p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Hosting charges are separate
+                  </p>
+                </div>
 
-              <div className="mt-8 space-y-3">
-                <Button
-                  size="lg"
-                  className="w-full gap-2 accent-gradient text-primary-foreground hover:opacity-90 glow-box"
-                  asChild
-                >
-                  <a href="https://wa.me/918080950921" target="_blank" rel="noopener noreferrer">
+                <div className="mt-8 space-y-3">
+                  {features.map((feature, index) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+                        <Check className="w-3 h-3 text-primary" />
+                      </div>
+                      <span className="text-foreground text-sm">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-8 space-y-3">
+                  <Button
+                    size="lg"
+                    className="w-full gap-2 accent-gradient text-primary-foreground hover:opacity-90 glow-box"
+                    onClick={handleWhatsAppClick}
+                  >
                     <MessageCircle className="w-5 h-5" />
                     Contact via WhatsApp
-                  </a>
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="w-full gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                  asChild
-                >
-                  <a href="mailto:hardikjadhav307@gmail.com">
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="w-full gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                    onClick={handleEmailClick}
+                  >
                     <Mail className="w-5 h-5" />
                     Contact via Email
-                  </a>
-                </Button>
+                  </Button>
+                </div>
               </div>
-            </div>
+            </InteractiveCard>
           </div>
 
           {/* Services Grid */}
@@ -117,18 +124,17 @@ const HireMe = () => {
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {services.map((service, index) => (
-                <div
-                  key={index}
-                  className="p-6 rounded-xl card-gradient border border-border hover:border-primary/50 transition-all duration-300"
-                >
-                  <service.icon className="w-10 h-10 text-primary mb-4" />
-                  <h3 className="text-lg font-heading font-bold text-foreground mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {service.description}
-                  </p>
-                </div>
+                <InteractiveCard key={index}>
+                  <div className="p-6 rounded-xl card-gradient border border-border hover:border-primary/50 transition-all duration-300 h-full">
+                    <service.icon className="w-10 h-10 text-primary mb-4" />
+                    <h3 className="text-lg font-heading font-bold text-foreground mb-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {service.description}
+                    </p>
+                  </div>
+                </InteractiveCard>
               ))}
             </div>
           </div>

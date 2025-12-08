@@ -2,6 +2,7 @@ import { ArrowRight, MapPin, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import hardikImage from "@/assets/hardik.jpg";
+import { generateResumePDF } from "@/utils/generateResume";
 
 const HeroSection = () => {
   return (
@@ -56,6 +57,7 @@ const HeroSection = () => {
                 variant="ghost"
                 size="lg"
                 className="gap-2 text-muted-foreground hover:text-primary"
+                onClick={generateResumePDF}
               >
                 <Download className="w-4 h-4" />
                 Download Résumé
