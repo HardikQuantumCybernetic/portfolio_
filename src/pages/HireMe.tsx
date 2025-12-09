@@ -1,9 +1,12 @@
+import { Suspense, lazy } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Mail, MessageCircle, Database, Globe, Palette, Server, Check, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import InteractiveCard from "@/components/InteractiveCard";
+import { HireMeSkeleton } from "@/components/SkeletonLoader";
+
+const InteractiveCard = lazy(() => import("@/components/InteractiveCard"));
 
 const HireMe = () => {
   const services = [

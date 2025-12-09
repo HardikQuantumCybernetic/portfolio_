@@ -1,13 +1,18 @@
+import { Suspense, lazy } from "react";
 import Navbar from "@/components/Navbar";
-import ProjectsSection from "@/components/ProjectsSection";
 import Footer from "@/components/Footer";
+import { ProjectsSkeleton } from "@/components/SkeletonLoader";
+
+const ProjectsSection = lazy(() => import("@/components/ProjectsSection"));
 
 const Projects = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
       <div className="pt-20">
-        <ProjectsSection />
+        <Suspense fallback={<ProjectsSkeleton />}>
+          <ProjectsSection />
+        </Suspense>
       </div>
       <Footer />
     </div>
