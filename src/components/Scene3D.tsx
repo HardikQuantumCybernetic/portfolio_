@@ -148,17 +148,18 @@ const Particles = ({ count = 100 }) => {
 
 const Scene3D = () => {
   return (
-    <div className="fixed inset-0 -z-10 pointer-events-none">
+    <div className="fixed inset-0 z-0 pointer-events-none" style={{ background: 'transparent' }}>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 60 }}
+        gl={{ alpha: true, antialias: true }}
         style={{ background: "transparent" }}
       >
-        <ambientLight intensity={0.3} />
-        <pointLight position={[10, 10, 10]} intensity={1} color="#4ecdc4" />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} color="#ffffff" />
+        <ambientLight intensity={0.4} />
+        <pointLight position={[10, 10, 10]} intensity={1.2} color="#4ecdc4" />
+        <pointLight position={[-10, -10, -10]} intensity={0.6} color="#ffffff" />
         
         <FloatingShapes />
-        <Particles count={150} />
+        <Particles count={100} />
       </Canvas>
     </div>
   );
