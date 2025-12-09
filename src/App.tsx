@@ -11,7 +11,7 @@ import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import HireMe from "./pages/HireMe";
 import NotFound from "./pages/NotFound";
-// Scene3D is now loaded per-page for home only
+import Scene3D from "./components/Scene3D";
 
 const queryClient = new QueryClient();
 
@@ -53,7 +53,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <ThemeInitializer />
-      {/* Scene3D moved to Index page only */}
+      <Scene3D />
       <Toaster />
       <Sonner />
       <BrowserRouter>
