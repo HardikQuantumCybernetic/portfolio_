@@ -1,16 +1,17 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import Footer from "@/components/Footer";
-import { GlowingOrb } from "@/components/MagneticCursor";
+import PageTransition from "@/components/PageTransition";
 
 const Index = () => {
   return (
-    <main className="min-h-screen bg-background relative">
-      <GlowingOrb />
-      <Navbar />
-      <HeroSection />
-      <Footer />
-    </main>
+    <PageTransition>
+      <main className="min-h-screen bg-background relative">
+        <Navbar />
+        <HeroSection />
+        <Footer />
+      </main>
+    </PageTransition>
   );
 };
 
