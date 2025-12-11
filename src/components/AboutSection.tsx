@@ -1,4 +1,5 @@
 import { MapPin, Globe, Languages, Award, ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
 import {
   Dialog,
   DialogContent,
@@ -60,18 +61,24 @@ const AboutSection = () => {
   ];
 
   return (
-    <section id="about" className="py-24 bg-card">
+    <section id="about" className="py-24 bg-card overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-16 animate-fade-up">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+          >
             <span className="text-primary font-medium text-sm tracking-wider uppercase">
               About Me
             </span>
             <h2 className="section-title mt-2">
               Building the <span className="text-gradient">Future</span> of Web
             </h2>
-          </div>
+          </motion.div>
 
           {/* About Content */}
           <div className="space-y-8 animate-fade-up delay-100">

@@ -1,16 +1,33 @@
 import { ArrowRight, MapPin, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import hardikImage from "@/assets/hardik.jpg";
 import { generateResumePDF } from "@/utils/generateResume";
 
 const HeroSection = () => {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+
   return (
-    <section className="min-h-screen hero-gradient flex items-center pt-20">
-      <div className="container mx-auto px-6">
+    <section ref={ref} className="min-h-screen hero-gradient flex items-center pt-20 overflow-hidden">
+      <motion.div style={{ y, opacity, scale }} className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
-          <div className="space-y-8 animate-fade-up">
+          <motion.div 
+            className="space-y-8"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border">
               <MapPin className="w-4 h-4 text-primary" />
               <span className="text-sm text-muted-foreground">
@@ -66,28 +83,33 @@ const HeroSection = () => {
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border">
-              <div>
-                <div className="text-3xl font-heading font-bold text-primary">3+</div>
-                <div className="text-sm text-muted-foreground">Projects</div>
-              </div>
-              <div>
-                <div className="text-3xl font-heading font-bold text-primary">5+</div>
-                <div className="text-sm text-muted-foreground">Technologies</div>
-              </div>
-              <div>
-                <div className="text-3xl font-heading font-bold text-primary">∞</div>
-                <div className="text-sm text-muted-foreground">Passion</div>
-              </div>
+              {[
+                { value: "3+", label: "Projects" },
+                { value: "5+", label: "Technologies" },
+                { value: "∞", label: "Passion" }
+              ].map((stat, i) => (
+                <motion.div 
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + i * 0.1 }}
+                >
+                  <div className="text-3xl font-heading font-bold text-primary">{stat.value}</div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
+                </motion.div>
+              ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Image */}
-          <div className="relative flex justify-center lg:justify-end animate-slide-in-right delay-200">
+          <motion.div 
+            className="relative flex justify-center lg:justify-end"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <div className="relative">
-              {/* Glow effect behind image */}
               <div className="absolute inset-0 rounded-full bg-primary/20 blur-3xl scale-110" />
-              
-              {/* Image container */}
               <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-primary/30 glow-box animate-float">
                 <img
                   src={hardikImage}
@@ -95,14 +117,16 @@ const HeroSection = () => {
                   className="w-full h-full object-cover object-top"
                 />
               </div>
-
-              {/* Decorative elements */}
-              <div className="absolute -top-4 -right-4 w-8 h-8 rounded-full bg-primary animate-glow-pulse" />
+              <motion.div 
+                className="absolute -top-4 -right-4 w-8 h-8 rounded-full bg-primary"
+                animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
               <div className="absolute -bottom-2 -left-6 w-6 h-6 rounded-full bg-primary/60" />
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
