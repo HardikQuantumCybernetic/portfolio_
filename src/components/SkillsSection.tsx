@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 const SkillsSection = () => {
   const skillCategories = [
     {
@@ -48,17 +50,23 @@ const SkillsSection = () => {
   ];
 
   return (
-    <section id="skills" className="py-24 hero-gradient">
+    <section id="skills" className="py-24 hero-gradient overflow-hidden">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-up">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
           <span className="text-primary font-medium text-sm tracking-wider uppercase">
             Expertise
           </span>
           <h2 className="section-title mt-2">
             Skills & <span className="text-gradient">Services</span>
           </h2>
-        </div>
+        </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Skills */}
