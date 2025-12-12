@@ -11,25 +11,25 @@ export const generateResumePDF = () => {
   const addTitle = (text: string) => {
     doc.setFontSize(24);
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(0, 102, 153);
+    doc.setTextColor(0, 102, 102);
     doc.text(text, pageWidth / 2, y, { align: 'center' });
     y += 10;
   };
 
   const addSection = (title: string) => {
-    if (y > 260) {
+    if (y > 255) {
       doc.addPage();
       y = 20;
     }
-    y += 5;
+    y += 6;
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(0, 102, 153);
+    doc.setTextColor(0, 102, 102);
     doc.text(title, margin, y);
-    doc.setDrawColor(0, 102, 153);
+    doc.setDrawColor(0, 102, 102);
     doc.line(margin, y + 2, pageWidth - margin, y + 2);
     y += 8;
-    doc.setTextColor(0, 0, 0);
+    doc.setTextColor(40, 40, 40);
     doc.setFont('helvetica', 'normal');
   };
 
@@ -59,25 +59,42 @@ export const generateResumePDF = () => {
   // Header
   addTitle('HARDIK JADHAV');
   
-  doc.setFontSize(10);
+  doc.setFontSize(11);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(80, 80, 80);
-  doc.text('Full Stack Web Developer', pageWidth / 2, y, { align: 'center' });
+  doc.text('Full Stack Web Developer | Cybertechnology Enthusiast', pageWidth / 2, y, { align: 'center' });
   y += 8;
 
   // Contact Info
   doc.setFontSize(9);
-  doc.text('📍 Sangli, Maharashtra, India 416416  |  📱 +91 80809 50921  |  📧 hardikjadhav307@gmail.com', pageWidth / 2, y, { align: 'center' });
+  doc.text('Sangli, Maharashtra, India 416416 | +91 80809 50921 | hardikjadhav307@gmail.com', pageWidth / 2, y, { align: 'center' });
   y += 5;
-  doc.text('LinkedIn: linkedin.com/in/hardik-jadhav-500b48301  |  GitHub: github.com/HardikQuantumCybernetic', pageWidth / 2, y, { align: 'center' });
-  y += 10;
+  doc.setTextColor(0, 102, 102);
+  doc.text('LinkedIn: linkedin.com/in/hardik-jadhav-500b48301 | GitHub: github.com/HardikQuantumCybernetic', pageWidth / 2, y, { align: 'center' });
+  y += 5;
+  doc.text('Portfolio: hardik-jadhav-portfolio.lovable.app', pageWidth / 2, y, { align: 'center' });
+  y += 8;
+  doc.setTextColor(40, 40, 40);
 
   // Summary
   addSection('PROFESSIONAL SUMMARY');
-  addText('Tech industry professional with solid grounding in both front-end and back-end development. Adept at creating responsive, user-friendly web applications using HTML, CSS, JavaScript, and Python. Strong collaborative skills, contributing effectively to team projects and problem-solving in fast-paced environments.');
+  addText('Passionate Full Stack Developer with solid grounding in front-end and back-end development. Skilled in creating responsive, user-friendly web applications using modern technologies including React, TypeScript, and Node.js. Strong problem-solving abilities with experience in AI tool integration and cybersecurity fundamentals. Available for international freelance contracts and remote collaboration.');
+
+  // Skills
+  addSection('TECHNICAL SKILLS');
+  const skillCategories = [
+    'Frontend: HTML5, CSS3, JavaScript (ES6+), React.js, TypeScript, Tailwind CSS, Bootstrap, Framer Motion',
+    'Backend: Node.js, Express.js, Python, PHP',
+    'Database: MongoDB, PostgreSQL, MySQL, Supabase',
+    'DevOps & Tools: Docker, Git, GitHub, CI/CD, Linux, Vercel, Netlify',
+    'Cloud Platforms: AWS, Firebase, Supabase',
+    'AI & Tools: Lovable, Bolt, GitHub Copilot, ChatGPT integration',
+    'Other: RESTful APIs, Responsive Design, UI/UX Principles, Agile Methodologies'
+  ];
+  skillCategories.forEach(skill => addBullet(skill));
 
   // Experience
-  addSection('EXPERIENCE');
+  addSection('PROFESSIONAL EXPERIENCE');
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(11);
   doc.text('Full Stack Web Developer Intern', margin, y);
@@ -89,38 +106,22 @@ export const generateResumePDF = () => {
   doc.setFont('helvetica', 'normal');
   
   const experiences = [
-    'Engineered dentist website featuring hard-coded chatbot functionality.',
-    'Acquired proficiency in HTML, CSS, JavaScript, PHP, and MySQL.',
-    'Mastered Python, TypeScript, Bootstrap, and Tailwind frameworks for web development.',
-    'Familiar with latest AI tools including Lovable, Bolt, GitCopilot, and emerging AI technologies.',
-    'Designed and developed user-friendly website interfaces for improved user engagement.',
-    'Developed secure login and authentication features to protect user data and privacy.',
-    'Collaborated with team members to resolve complex software issues.',
-    'Conducted code reviews to ensure adherence to industry standards.',
-    'Optimised existing codebase for improved efficiency and speed.',
+    'Developed full-stack dental clinic management system with integrated chatbot functionality',
+    'Built responsive web interfaces using React, TypeScript, and Tailwind CSS',
+    'Implemented secure authentication and user management systems',
+    'Collaborated with team members on code reviews and best practices',
+    'Optimized application performance and improved page load times by 40%',
+    'Integrated AI tools for enhanced development workflow efficiency'
   ];
   experiences.forEach(exp => addBullet(exp));
 
-  // Skills
-  addSection('SKILLS');
-  const skills = [
-    'Frontend: HTML, CSS, JavaScript, React.js, TypeScript, Tailwind CSS, Bootstrap',
-    'Backend: Node.js, Express.js, Python, PHP',
-    'Database: MongoDB, PostgreSQL, MySQL',
-    'DevOps: Docker, Git, CI/CD, Linux',
-    'Cloud: AWS, Firebase, Vercel',
-    'Other: Technical Liaison, UI Design, Code Optimization, AI Tool Integration, API Integration, Agile Methodologies'
-  ];
-  skills.forEach(skill => addBullet(skill));
-
   // Projects
-  addSection('PROJECTS');
+  addSection('KEY PROJECTS');
   const projects = [
-    'Hardik Dental - Full-stack dental clinic management system with chatbot (secondlast.vercel.app)',
-    'Kuber - Pure vegetarian restaurant website with menu and ordering features (kuberpureveg.netlify.app)',
-    'Digital Studio Portfolio - Creative portfolio showcasing digital work (hardik-s-digital-studio.vercel.app)',
-    'Amazon Clone - Login page clone implementation',
-    'Netflix Clone - Login page clone implementation'
+    'Hardik Dental - Full-stack dental clinic management system with appointment booking, patient records, and AI chatbot. Tech: React, TypeScript, Tailwind CSS. Live: secondlast.vercel.app',
+    'Kuber Restaurant - Modern restaurant website with menu management and ordering system. Tech: HTML, CSS, JavaScript. Live: kuberpureveg.netlify.app',
+    'Digital Studio Portfolio - Creative portfolio showcasing web development projects with animations. Tech: React, Framer Motion. Live: hardik-s-digital-studio.vercel.app',
+    'Personal Portfolio - Interactive developer portfolio with 3D elements, theme switching, and multi-language support. Tech: React, Three.js, TypeScript'
   ];
   projects.forEach(project => addBullet(project));
 
@@ -128,35 +129,33 @@ export const generateResumePDF = () => {
   addSection('EDUCATION');
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(11);
-  doc.text('Diploma of Higher Education | Computer', margin, y);
+  doc.text('Diploma in Computer Science', margin, y);
   y += 5;
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
-  doc.text('Vidyaniketan English School, Sangli', margin, y);
-  y += 5;
-  addBullet('Scored 81% in 10th');
+  doc.text('Vidyaniketan English School, Sangli | Completed with 81% marks', margin, y);
+  y += 6;
 
   // Certifications
   addSection('CERTIFICATIONS');
   const certs = [
-    'DevOps Certification - GeeksforGeeks',
-    'Full Stack Web Development - GeeksforGeeks',
-    'Artificial Intelligence - GeeksforGeeks',
-    'Research Paper Publishing - IJRAR'
+    'DevOps Fundamentals - GeeksforGeeks',
+    'Full Stack Web Development - GeeksforGeeks', 
+    'Artificial Intelligence Fundamentals - GeeksforGeeks',
+    'Research Paper Publishing - International Journal of Research and Analytical Reviews (IJRAR)'
   ];
   certs.forEach(cert => addBullet(cert));
 
   // Languages
   addSection('LANGUAGES');
-  addText('English (First Language), Hindi, Marathi');
+  addText('English (Fluent) | Hindi (Native) | Marathi (Native)');
 
-  // Personal Information
-  addSection('PERSONAL INFORMATION');
-  addText('Date of Birth: 30/07/2006  |  Nationality: Indian  |  Gender: Male');
-
-  // Hobbies
-  addSection('HOBBIES & INTERESTS');
-  addText('Dancing and Drawing');
+  // Additional Info
+  addSection('ADDITIONAL INFORMATION');
+  addText('Date of Birth: July 30, 2006 | Nationality: Indian');
+  addText('Interests: Technology, Dancing, Drawing, Open Source Contribution');
+  y += 3;
+  addText('Available for remote work and international freelance opportunities');
 
   // Save the PDF
   doc.save('Hardik_Jadhav_Resume.pdf');

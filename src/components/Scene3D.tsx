@@ -1,5 +1,5 @@
 import { useRef, useMemo, useState, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -21,8 +21,8 @@ const useThemeColors = () => {
   }, []);
 
   return isDark 
-    ? { primary: "#4ecdc4", secondary: "#2a9d8f", ambient: 0.4 }
-    : { primary: "#8b5a2b", secondary: "#a0522d", ambient: 0.6 };
+    ? { primary: "#4ecdc4", secondary: "#2a9d8f", accent: "#1a6b64", ambient: 0.4 }
+    : { primary: "#c9a66b", secondary: "#8b6914", accent: "#5c4a1f", ambient: 0.7 };
 };
 
 // Floating geometric shapes
@@ -108,27 +108,68 @@ const FloatingShapes = () => {
   );
 };
 
-// Interactive particles
-const Particles = ({ count = 100 }) => {
+// Mouse-following interactive particles
+const MouseParticles = ({ count = 80 }) => {
   const mesh = useRef<THREE.Points>(null);
   const colors = useThemeColors();
+  const mouse = useRef({ x: 0, y: 0 });
+  const { viewport } = useThree();
   
   const particles = useMemo(() => {
     const positions = new Float32Array(count * 3);
+    const originalPositions = new Float32Array(count * 3);
     
     for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 15;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 15;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 10 - 5;
+      const x = (Math.random() - 0.5) * 12;
+      const y = (Math.random() - 0.5) * 12;
+      const z = (Math.random() - 0.5) * 6 - 3;
+      positions[i * 3] = x;
+      positions[i * 3 + 1] = y;
+      positions[i * 3 + 2] = z;
+      originalPositions[i * 3] = x;
+      originalPositions[i * 3 + 1] = y;
+      originalPositions[i * 3 + 2] = z;
     }
     
-    return { positions };
+    return { positions, originalPositions };
   }, [count]);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouse.current.x = ((e.clientX / window.innerWidth) * 2 - 1) * (viewport.width / 2);
+      mouse.current.y = (-(e.clientY / window.innerHeight) * 2 + 1) * (viewport.height / 2);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [viewport]);
 
   useFrame((state) => {
     if (mesh.current) {
-      mesh.current.rotation.y = state.clock.elapsedTime * 0.02;
-      mesh.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.1) * 0.1;
+      const positions = mesh.current.geometry.attributes.position.array as Float32Array;
+      
+      for (let i = 0; i < count; i++) {
+        const ox = particles.originalPositions[i * 3];
+        const oy = particles.originalPositions[i * 3 + 1];
+        
+        const dx = mouse.current.x - ox;
+        const dy = mouse.current.y - oy;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const maxDist = 3;
+        
+        if (distance < maxDist) {
+          const force = (1 - distance / maxDist) * 0.8;
+          positions[i * 3] = ox + dx * force * 0.3;
+          positions[i * 3 + 1] = oy + dy * force * 0.3;
+        } else {
+          positions[i * 3] += (ox - positions[i * 3]) * 0.05;
+          positions[i * 3 + 1] += (oy - positions[i * 3 + 1]) * 0.05;
+        }
+        
+        positions[i * 3 + 1] += Math.sin(state.clock.elapsedTime + i) * 0.002;
+      }
+      
+      mesh.current.geometry.attributes.position.needsUpdate = true;
+      mesh.current.rotation.z = state.clock.elapsedTime * 0.02;
     }
   });
 
@@ -143,10 +184,10 @@ const Particles = ({ count = 100 }) => {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.05}
+        size={0.08}
         color={colors.primary}
         transparent
-        opacity={0.8}
+        opacity={0.9}
         sizeAttenuation
       />
     </points>
@@ -157,18 +198,18 @@ const Scene3D = () => {
   const colors = useThemeColors();
   
   return (
-    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 60 }}
-        gl={{ alpha: true, antialias: true }}
+        gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
         style={{ background: "transparent" }}
       >
         <ambientLight intensity={colors.ambient} />
         <pointLight position={[10, 10, 10]} intensity={1.2} color={colors.primary} />
-        <pointLight position={[-10, -10, -10]} intensity={0.6} color="#ffffff" />
+        <pointLight position={[-10, -10, -10]} intensity={0.5} color={colors.secondary} />
         
         <FloatingShapes />
-        <Particles count={100} />
+        <MouseParticles count={80} />
       </Canvas>
     </div>
   );
