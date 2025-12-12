@@ -1,25 +1,23 @@
 import { ArrowRight, MapPin, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import hardikImage from "@/assets/hardik.jpg";
 import { generateResumePDF } from "@/utils/generateResume";
+import { TypewriterText } from "@/components/MagneticCursor";
 
 const HeroSection = () => {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+  const roles = [
+    "Full Stack Developer",
+    "Cybertechnology Enthusiast", 
+    "Web Developer",
+    "Problem Solver",
+    "Tech Innovator"
+  ];
 
   return (
-    <section ref={ref} className="min-h-screen hero-gradient flex items-center pt-20 overflow-hidden">
-      <motion.div style={{ y, opacity, scale }} className="container mx-auto px-6">
+    <section className="min-h-screen hero-gradient flex items-center pt-20 overflow-hidden relative z-10">
+      <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <motion.div 
@@ -41,9 +39,9 @@ const HeroSection = () => {
                 <span className="text-gradient">Hardik</span>
                 <span className="text-primary">.</span>
               </h1>
-              <h2 className="text-2xl md:text-3xl font-heading font-medium text-muted-foreground">
-                Web Developer & Cybertechnology Enthusiast
-              </h2>
+            <h2 className="text-2xl md:text-3xl font-heading font-medium text-muted-foreground h-10">
+              <TypewriterText texts={roles} speed={80} deleteSpeed={40} pauseTime={2500} />
+            </h2>
             </div>
 
             <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
@@ -104,8 +102,8 @@ const HeroSection = () => {
           {/* Image */}
           <motion.div 
             className="relative flex justify-center lg:justify-end"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="relative">
@@ -126,7 +124,7 @@ const HeroSection = () => {
             </div>
           </motion.div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };
