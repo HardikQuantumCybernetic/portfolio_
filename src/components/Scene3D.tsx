@@ -198,7 +198,7 @@ const Scene3D = () => {
   const colors = useThemeColors();
   
   return (
-    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 60 }}
         gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
