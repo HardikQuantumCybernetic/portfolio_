@@ -16,6 +16,7 @@ import Scene3D from "./components/Scene3D";
 import { GlowingOrb } from "./components/MagneticCursor";
 import PageLoader from "./components/PageLoader";
 import ScrollProgress from "./components/ScrollProgress";
+import ChatWidget from "./components/ChatWidget";
 
 const queryClient = new QueryClient();
 
@@ -109,6 +110,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AppContent />
+        <ChatWidget />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
