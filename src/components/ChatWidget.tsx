@@ -202,9 +202,12 @@ const ChatWidget = () => {
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  className="flex-1 flex flex-col"
+                  className="flex-1 flex flex-col overflow-hidden"
                 >
-                  <ScrollArea className="flex-1 p-4 h-[340px]" ref={scrollRef}>
+                  <div 
+                    ref={scrollRef}
+                    className="flex-1 p-4 h-[340px] overflow-y-auto scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent"
+                  >
                     <div className="space-y-4">
                       {messages.map((message) => (
                         <motion.div
@@ -257,7 +260,7 @@ const ChatWidget = () => {
                         </motion.div>
                       )}
                     </div>
-                  </ScrollArea>
+                  </div>
 
                   {/* Input */}
                   <div className="p-4 border-t border-border">
