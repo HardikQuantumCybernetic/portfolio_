@@ -12,6 +12,7 @@ import devopsCert from "@/assets/certificates/devops-certificate.jpg";
 import fullstackCert from "@/assets/certificates/fullstack-certificate.jpg";
 import aiCert from "@/assets/certificates/ai-certificate.jpg";
 import researchCert from "@/assets/certificates/research-paper-certificate.jpg";
+import gitCert from "@/assets/certificates/git-certificate.jpg";
 
 const AboutSection = () => {
   const keyFacts = [
@@ -50,6 +51,12 @@ const AboutSection = () => {
       issuer: "GeeksforGeeks",
       image: aiCert,
       category: "Artificial Intelligence",
+    },
+    {
+      title: "Git - Skill Up",
+      issuer: "GeeksforGeeks",
+      image: gitCert,
+      category: "Version Control",
     },
     {
       title: "Research Paper Publication",
