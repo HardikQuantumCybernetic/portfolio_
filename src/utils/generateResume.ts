@@ -142,9 +142,29 @@ export const generateResumePDF = () => {
     'DevOps Fundamentals - GeeksforGeeks',
     'Full Stack Web Development - GeeksforGeeks', 
     'Artificial Intelligence Fundamentals - GeeksforGeeks',
+    'Git Version Control - GeeksforGeeks',
     'Research Paper Publishing - International Journal of Research and Analytical Reviews (IJRAR)'
   ];
   certs.forEach(cert => addBullet(cert));
+
+  // Research Publication
+  addSection('RESEARCH PUBLICATION');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(11);
+  doc.text('A Brief Overview on Ethical Hacking, its Attacks and Hardware Tools with Web Penetration Testing', margin, y);
+  y += 5;
+  doc.setFont('helvetica', 'italic');
+  doc.setFontSize(10);
+  doc.text('Published in IJRAR - International Journal of Research and Analytical Reviews', margin, y);
+  y += 6;
+  doc.setFont('helvetica', 'normal');
+  const researchDetails = [
+    'Comprehensive research paper covering ethical hacking methodologies, attack vectors, and defense mechanisms',
+    'Analyzed hardware tools used in penetration testing and security assessments',
+    'Explored web penetration testing techniques and best practices for secure application development',
+    'Contributed to cybersecurity knowledge base with peer-reviewed publication'
+  ];
+  researchDetails.forEach(detail => addBullet(detail));
 
   // Languages
   addSection('LANGUAGES');
