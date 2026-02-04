@@ -15,7 +15,7 @@ const ProjectsSection = () => {
       shortDesc: "Dental clinic management web app — appointments, patient records, basic billing.",
       tech: ["React", "Tailwind", "Node/Express", "MySQL"],
       github: "https://github.com/HardikQuantumCybernetic/hardik-dental",
-      liveUrl: "https://secondlast.vercel.app",
+      liveUrl: "https://secondlasttry-gray.vercel.app/",
       caseStudy: {
         problem: "Streamline clinic workflows and reduce administrative overhead",
         solution: "Built an appointment scheduler, patient database, and role-based access control",
