@@ -13,6 +13,7 @@ import fullstackCert from "@/assets/certificates/fullstack-certificate.jpg";
 import aiCert from "@/assets/certificates/ai-certificate.jpg";
 import researchCert from "@/assets/certificates/research-paper-certificate.jpg";
 import gitCert from "@/assets/certificates/git-certificate.jpg";
+import generativeAiCert from "@/assets/certificates/generative-ai-certificate.jpg";
 
 const AboutSection = () => {
   const keyFacts = [
@@ -57,6 +58,13 @@ const AboutSection = () => {
       issuer: "GeeksforGeeks",
       image: gitCert,
       category: "Version Control",
+    },
+    {
+      title: "Generative AI Revolution Workshop",
+      issuer: "AspireForHer",
+      description: "Unleashing Innovation: The Generative AI Revolution - Workshop hosted by industry leaders",
+      image: generativeAiCert,
+      category: "Artificial Intelligence",
     },
     {
       title: "Research Paper Publication",
