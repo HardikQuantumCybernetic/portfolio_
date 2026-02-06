@@ -143,7 +143,8 @@ export const generateResumePDF = () => {
     'Full Stack Web Development - GeeksforGeeks', 
     'Artificial Intelligence Fundamentals - GeeksforGeeks',
     'Git Version Control - GeeksforGeeks',
-    'Research Paper Publishing - International Journal of Research and Analytical Reviews (IJRAR)'
+    'Research Paper Publishing - International Journal of Research and Analytical Reviews (IJRAR)',
+    'Generative AI Revolution Workshop - AspireForHer (Sept 2024)'
   ];
   certs.forEach(cert => addBullet(cert));
 

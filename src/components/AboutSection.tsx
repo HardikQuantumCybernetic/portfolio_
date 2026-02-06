@@ -60,18 +60,18 @@ const AboutSection = () => {
       category: "Version Control",
     },
     {
-      title: "Generative AI Revolution Workshop",
-      issuer: "AspireForHer",
-      description: "Unleashing Innovation: The Generative AI Revolution - Workshop hosted by industry leaders",
-      image: generativeAiCert,
-      category: "Artificial Intelligence",
-    },
-    {
       title: "Research Paper Publication",
       issuer: "IJRAR - International Journal",
       description: "A Brief Overview on Ethical Hacking, its Attacks and Hardware Tools with Web Penetration Testing",
       image: researchCert,
       category: "Research",
+    },
+    {
+      title: "Generative AI Revolution Workshop",
+      issuer: "AspireForHer",
+      description: "Unleashing Innovation: The Generative AI Revolution - Workshop hosted by industry leaders",
+      image: generativeAiCert,
+      category: "Artificial Intelligence",
     },
   ];
 
