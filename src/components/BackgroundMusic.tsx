@@ -1,7 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "@/hooks/use-toast";
 
 const BackgroundMusic = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -10,13 +12,21 @@ const BackgroundMusic = () => {
 
     const playAudio = () => {
       audio.play().catch(() => {});
+      setHasInteracted(true);
       document.removeEventListener("click", playAudio);
       document.removeEventListener("scroll", playAudio);
       document.removeEventListener("keydown", playAudio);
     };
 
-    // Browsers block autoplay without user interaction, so we play on first interaction
-    audio.play().catch(() => {
+    audio.play().then(() => {
+      setHasInteracted(true);
+    }).catch(() => {
+      // Show a subtle toast prompting interaction
+      toast({
+        title: "🎵 Background Music",
+        description: "Click anywhere to start the cosmic ambient music.",
+        duration: 5000,
+      });
       document.addEventListener("click", playAudio);
       document.addEventListener("scroll", playAudio);
       document.addEventListener("keydown", playAudio);
