@@ -17,6 +17,7 @@ import { GlowingOrb } from "./components/MagneticCursor";
 import PageLoader from "./components/PageLoader";
 import ScrollProgress from "./components/ScrollProgress";
 import ChatWidget from "./components/ChatWidget";
+import BackgroundMusic from "./components/BackgroundMusic";
 
 const queryClient = new QueryClient();
 
@@ -111,6 +112,7 @@ const App = () => (
       <BrowserRouter>
         <AppContent />
         <ChatWidget />
+        <BackgroundMusic />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
