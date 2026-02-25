@@ -7,7 +7,6 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -15,20 +14,43 @@ serve(async (req) => {
   try {
     const { message, conversationHistory } = await req.json();
     
-    const apiKey = Deno.env.get('LOVABLE_API_KEY');
+    const apiKey = Deno.env.get('GOOGLE_AI_API_KEY');
     
     if (!apiKey) {
-      console.error('LOVABLE_API_KEY is not configured');
+      console.error('GOOGLE_AI_API_KEY is not configured');
       throw new Error('AI service is not configured');
     }
 
     console.log('Processing chat message:', message);
 
-    // Build conversation messages
-    const messages = [
+    const contents = [];
+    
+    // Add conversation history
+    if (conversationHistory && conversationHistory.length > 0) {
+      for (const msg of conversationHistory) {
+        contents.push({
+          role: msg.role === 'user' ? 'user' : 'model',
+          parts: [{ text: msg.content }]
+        });
+      }
+    }
+    
+    // Add current message
+    contents.push({
+      role: 'user',
+      parts: [{ text: message }]
+    });
+
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
       {
-        role: 'system',
-        content: `You are a helpful AI assistant for Hardik Jadhav's portfolio website. You help visitors learn about Hardik's skills, projects, and experience. Be friendly, concise, and helpful.
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents,
+          systemInstruction: {
+            parts: [{
+              text: `You are a helpful AI assistant for Hardik Jadhav's portfolio website. You help visitors learn about Hardik's skills, projects, and experience. Be friendly, concise, and helpful.
 
 Key information about Hardik:
 - Full-stack developer with expertise in React, TypeScript, Node.js, Python
@@ -37,53 +59,26 @@ Key information about Hardik:
 - Passionate about building innovative solutions
 
 Keep responses brief and helpful. If asked about hiring or contacting Hardik, direct them to the Contact or Hire Me pages.`
-      }
-    ];
-    
-    // Add conversation history
-    if (conversationHistory && conversationHistory.length > 0) {
-      for (const msg of conversationHistory) {
-        messages.push({
-          role: msg.role === 'user' ? 'user' : 'assistant',
-          content: msg.content
-        });
-      }
-    }
-    
-    // Add current message
-    messages.push({
-      role: 'user',
-      content: message
-    });
-
-    // Call Lovable AI Gateway (OpenAI-compatible API)
-    const response = await fetch(
-      'https://ai.gateway.lovable.dev/v1/chat/completions',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: 'google/gemini-3-flash-preview',
-          messages,
-          max_tokens: 1024,
-          temperature: 0.7,
+            }]
+          },
+          generationConfig: {
+            maxOutputTokens: 1024,
+            temperature: 0.7,
+          },
         }),
       }
     );
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('AI Gateway error:', response.status, errorText);
+      console.error('Google AI error:', response.status, errorText);
       throw new Error(`AI API error: ${response.status}`);
     }
 
     const data = await response.json();
     console.log('AI response received');
 
-    const aiResponse = data.choices?.[0]?.message?.content || 
+    const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 
       "I'm sorry, I couldn't generate a response. Please try again.";
 
     return new Response(JSON.stringify({ response: aiResponse }), {
