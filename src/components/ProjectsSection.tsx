@@ -46,6 +46,18 @@ const ProjectsSection = () => {
         result: "Professional online presence for freelance opportunities",
       },
     },
+    {
+      title: "DocReader",
+      shortDesc: "Privacy-first, client-side document reader with TTS, word highlighting, WAV export, EPUB navigation, and OCR. Supports PDF, EPUB, DOCX, TXT & images — no data leaves your browser.",
+      tech: ["React", "TypeScript", "PDF.js", "Tesseract.js", "Web Speech API"],
+      github: "https://github.com/HardikQuantumCybernetic/vox-scroll-scribe",
+      liveUrl: "https://vox-scroll-scribe.vercel.app/",
+      caseStudy: {
+        problem: "Users need a private, offline-capable way to read and listen to documents",
+        solution: "Built a fully client-side reader with multi-format support, TTS with word-level highlighting, and WAV audio export",
+        result: "100% privacy-preserving document reader with zero server dependency",
+      },
+    },
   ];
 
   return (
