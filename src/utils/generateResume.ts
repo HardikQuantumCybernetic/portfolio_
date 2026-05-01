@@ -78,7 +78,7 @@ export const generateResumePDF = () => {
 
   // Summary
   addSection('PROFESSIONAL SUMMARY');
-  addText('Passionate Full Stack Developer with solid grounding in front-end and back-end development. Skilled in creating responsive, user-friendly web applications using modern technologies including React, TypeScript, and Node.js. Strong problem-solving abilities with experience in AI tool integration and cybersecurity fundamentals. Available for international freelance contracts and remote collaboration.');
+  addText('Founder of Cybernetic Tech Solution, a Sangli-based tech internship and career training company. Passionate Full Stack Developer with solid grounding in front-end and back-end development. Skilled in creating responsive, user-friendly web applications using modern technologies including React, TypeScript, and Node.js. Strong problem-solving abilities with experience in AI tool integration, 3D web experiences, and cybersecurity fundamentals. Available for international freelance contracts and remote collaboration.');
 
   // Skills
   addSection('TECHNICAL SKILLS');
