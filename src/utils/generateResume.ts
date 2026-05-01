@@ -97,6 +97,24 @@ export const generateResumePDF = () => {
   addSection('PROFESSIONAL EXPERIENCE');
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(11);
+  doc.text('Founder & Full Stack Developer', margin, y);
+  y += 5;
+  doc.setFont('helvetica', 'italic');
+  doc.setFontSize(10);
+  doc.text('Cybernetic Tech Solution, Sangli, India | 2025 - Present', margin, y);
+  y += 6;
+  doc.setFont('helvetica', 'normal');
+  const founderBullets = [
+    'Founded a tech internship and career training company based in Sangli, Maharashtra',
+    'Designed and shipped the company website (React 18, Vite, TypeScript, Tailwind, Three.js) hosted on Vercel',
+    'Built backend with Lovable Cloud (Supabase Postgres + Edge Functions) and Resend for email-based lead capture',
+    'Lead end-to-end product, branding, and delivery for internship and training programs',
+  ];
+  founderBullets.forEach(b => addBullet(b));
+  y += 2;
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(11);
   doc.text('Full Stack Web Developer Intern', margin, y);
   y += 5;
   doc.setFont('helvetica', 'italic');
