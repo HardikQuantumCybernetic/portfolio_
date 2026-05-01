@@ -9,7 +9,14 @@ import {
 } from "@/components/ui/dialog";
 
 const ProjectsSection = () => {
-  const projects = [
+  const projects: Array<{
+    title: string;
+    shortDesc: string;
+    tech: string[];
+    github?: string;
+    liveUrl: string;
+    caseStudy: { problem: string; solution: string; result: string };
+  }> = [
     {
       title: "hardik-dental",
       shortDesc: "Dental clinic management web app — appointments, patient records, basic billing.",
@@ -56,6 +63,17 @@ const ProjectsSection = () => {
         problem: "Users need a private, offline-capable way to read and listen to documents",
         solution: "Built a fully client-side reader with multi-format support, TTS with word-level highlighting, and WAV audio export",
         result: "100% privacy-preserving document reader with zero server dependency",
+      },
+    },
+    {
+      title: "Cybernetic Tech Solution",
+      shortDesc: "Premium, sleek website for Cybernetic Tech Solution — a tech internship and career training company based in Sangli, Maharashtra. Multi-page responsive site with 3D scenes, contact form backed by Postgres + Resend email delivery, and a cybernetic / AWS-inspired dark aesthetic with neon accents.",
+      tech: ["React 18", "Vite", "TypeScript", "Tailwind", "Three.js", "Lovable Cloud", "Resend"],
+      liveUrl: "https://cybernetic-launchpad-ten.vercel.app",
+      caseStudy: {
+        problem: "Establish a premium online presence for a tech internship & career training company with a reliable lead-capture pipeline",
+        solution: "Built a multi-page responsive website with interactive Three.js scenes, semantic SEO, and a contact form persisted in Postgres with email delivery via Resend through Supabase Edge Functions",
+        result: "Fully production-ready company website live at cyberneticts.in with a working contact-to-inbox lead pipeline",
       },
     },
   ];
@@ -219,14 +237,16 @@ const ProjectsSection = () => {
                   <h3 className="text-2xl font-heading font-bold text-foreground group-hover:text-primary transition-colors">
                     {project.title}
                   </h3>
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 rounded-lg bg-secondary hover:bg-primary hover:text-primary-foreground transition-all"
-                  >
-                    <Github className="w-5 h-5" />
-                  </a>
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-lg bg-secondary hover:bg-primary hover:text-primary-foreground transition-all"
+                    >
+                      <Github className="w-5 h-5" />
+                    </a>
+                  )}
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
                   {project.shortDesc}
@@ -278,17 +298,19 @@ const ProjectsSection = () => {
                 </div>
 
                 <div className="flex gap-3 mt-6">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                    asChild
-                  >
-                    <a href={project.github} target="_blank" rel="noopener noreferrer">
-                      <Github className="w-4 h-4" />
-                      GitHub
-                    </a>
-                  </Button>
+                  {project.github && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                      asChild
+                    >
+                      <a href={project.github} target="_blank" rel="noopener noreferrer">
+                        <Github className="w-4 h-4" />
+                        GitHub
+                      </a>
+                    </Button>
+                  )}
                   <Button
                     size="sm"
                     className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90"

@@ -62,7 +62,7 @@ export const generateResumePDF = () => {
   doc.setFontSize(11);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(80, 80, 80);
-  doc.text('Full Stack Web Developer | Cybertechnology Enthusiast', pageWidth / 2, y, { align: 'center' });
+  doc.text('Founder, Cybernetic Tech Solution | Full Stack Web Developer | Cybertechnology Enthusiast', pageWidth / 2, y, { align: 'center' });
   y += 8;
 
   // Contact Info
@@ -78,7 +78,7 @@ export const generateResumePDF = () => {
 
   // Summary
   addSection('PROFESSIONAL SUMMARY');
-  addText('Passionate Full Stack Developer with solid grounding in front-end and back-end development. Skilled in creating responsive, user-friendly web applications using modern technologies including React, TypeScript, and Node.js. Strong problem-solving abilities with experience in AI tool integration and cybersecurity fundamentals. Available for international freelance contracts and remote collaboration.');
+  addText('Founder of Cybernetic Tech Solution, a Sangli-based tech internship and career training company. Passionate Full Stack Developer with solid grounding in front-end and back-end development. Skilled in creating responsive, user-friendly web applications using modern technologies including React, TypeScript, and Node.js. Strong problem-solving abilities with experience in AI tool integration, 3D web experiences, and cybersecurity fundamentals. Available for international freelance contracts and remote collaboration.');
 
   // Skills
   addSection('TECHNICAL SKILLS');
@@ -95,6 +95,24 @@ export const generateResumePDF = () => {
 
   // Experience
   addSection('PROFESSIONAL EXPERIENCE');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(11);
+  doc.text('Founder & Full Stack Developer', margin, y);
+  y += 5;
+  doc.setFont('helvetica', 'italic');
+  doc.setFontSize(10);
+  doc.text('Cybernetic Tech Solution, Sangli, India | 2025 - Present', margin, y);
+  y += 6;
+  doc.setFont('helvetica', 'normal');
+  const founderBullets = [
+    'Founded a tech internship and career training company based in Sangli, Maharashtra',
+    'Designed and shipped the company website (React 18, Vite, TypeScript, Tailwind, Three.js) hosted on Vercel',
+    'Built backend with Lovable Cloud (Supabase Postgres + Edge Functions) and Resend for email-based lead capture',
+    'Lead end-to-end product, branding, and delivery for internship and training programs',
+  ];
+  founderBullets.forEach(b => addBullet(b));
+  y += 2;
+
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(11);
   doc.text('Full Stack Web Developer Intern', margin, y);
@@ -118,10 +136,11 @@ export const generateResumePDF = () => {
   // Projects
   addSection('KEY PROJECTS');
   const projects = [
+    'Cybernetic Tech Solution - Premium multi-page website for tech internship company with 3D scenes and Postgres + Resend contact pipeline. Tech: React 18, Vite, TypeScript, Tailwind, Three.js, Lovable Cloud. Live: cybernetic-launchpad-ten.vercel.app',
     'Hardik Dental - Full-stack dental clinic management system with appointment booking, patient records, and AI chatbot. Tech: React, TypeScript, Tailwind CSS. Live: secondlast.vercel.app',
     'Kuber Restaurant - Modern restaurant website with menu management and ordering system. Tech: HTML, CSS, JavaScript. Live: kuberpureveg.netlify.app',
-    'Digital Studio Portfolio - Creative portfolio showcasing web development projects with animations. Tech: React, Framer Motion. Live: hardik-s-digital-studio.vercel.app',
-    'Personal Portfolio - Interactive developer portfolio with 3D elements, theme switching, and multi-language support. Tech: React, Three.js, TypeScript'
+    'DocReader - Privacy-first client-side document reader with TTS, word-level highlighting, WAV export, and OCR. Tech: React, TypeScript, PDF.js, Tesseract.js. Live: vox-scroll-scribe.vercel.app',
+    'Digital Studio Portfolio - Creative portfolio showcasing web development projects with animations. Tech: React, Framer Motion. Live: hardik-s-digital-studio.vercel.app'
   ];
   projects.forEach(project => addBullet(project));
 
