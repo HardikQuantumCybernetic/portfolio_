@@ -9,7 +9,14 @@ import {
 } from "@/components/ui/dialog";
 
 const ProjectsSection = () => {
-  const projects = [
+  const projects: Array<{
+    title: string;
+    shortDesc: string;
+    tech: string[];
+    github?: string;
+    liveUrl: string;
+    caseStudy: { problem: string; solution: string; result: string };
+  }> = [
     {
       title: "hardik-dental",
       shortDesc: "Dental clinic management web app — appointments, patient records, basic billing.",
