@@ -298,17 +298,19 @@ const ProjectsSection = () => {
                 </div>
 
                 <div className="flex gap-3 mt-6">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                    asChild
-                  >
-                    <a href={project.github} target="_blank" rel="noopener noreferrer">
-                      <Github className="w-4 h-4" />
-                      GitHub
-                    </a>
-                  </Button>
+                  {project.github && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                      asChild
+                    >
+                      <a href={project.github} target="_blank" rel="noopener noreferrer">
+                        <Github className="w-4 h-4" />
+                        GitHub
+                      </a>
+                    </Button>
+                  )}
                   <Button
                     size="sm"
                     className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
