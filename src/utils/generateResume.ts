@@ -72,7 +72,7 @@ export const generateResumePDF = () => {
   doc.setTextColor(0, 102, 102);
   doc.text('LinkedIn: linkedin.com/in/hardik-jadhav-500b48301 | GitHub: github.com/HardikQuantumCybernetic', pageWidth / 2, y, { align: 'center' });
   y += 5;
-  doc.text('Portfolio: hardik-jadhav-portfolio.lovable.app', pageWidth / 2, y, { align: 'center' });
+  doc.text('Portfolio: hardik-s-digital-studio.vercel.app', pageWidth / 2, y, { align: 'center' });
   y += 8;
   doc.setTextColor(40, 40, 40);
 
