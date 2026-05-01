@@ -136,10 +136,11 @@ export const generateResumePDF = () => {
   // Projects
   addSection('KEY PROJECTS');
   const projects = [
+    'Cybernetic Tech Solution - Premium multi-page website for tech internship company with 3D scenes and Postgres + Resend contact pipeline. Tech: React 18, Vite, TypeScript, Tailwind, Three.js, Lovable Cloud. Live: cybernetic-launchpad-ten.vercel.app',
     'Hardik Dental - Full-stack dental clinic management system with appointment booking, patient records, and AI chatbot. Tech: React, TypeScript, Tailwind CSS. Live: secondlast.vercel.app',
     'Kuber Restaurant - Modern restaurant website with menu management and ordering system. Tech: HTML, CSS, JavaScript. Live: kuberpureveg.netlify.app',
-    'Digital Studio Portfolio - Creative portfolio showcasing web development projects with animations. Tech: React, Framer Motion. Live: hardik-s-digital-studio.vercel.app',
-    'Personal Portfolio - Interactive developer portfolio with 3D elements, theme switching, and multi-language support. Tech: React, Three.js, TypeScript'
+    'DocReader - Privacy-first client-side document reader with TTS, word-level highlighting, WAV export, and OCR. Tech: React, TypeScript, PDF.js, Tesseract.js. Live: vox-scroll-scribe.vercel.app',
+    'Digital Studio Portfolio - Creative portfolio showcasing web development projects with animations. Tech: React, Framer Motion. Live: hardik-s-digital-studio.vercel.app'
   ];
   projects.forEach(project => addBullet(project));
 
