@@ -62,7 +62,7 @@ export const generateResumePDF = () => {
   doc.setFontSize(11);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(80, 80, 80);
-  doc.text('Full Stack Web Developer | Cybertechnology Enthusiast', pageWidth / 2, y, { align: 'center' });
+  doc.text('Founder, Cybernetic Tech Solution | Full Stack Web Developer | Cybertechnology Enthusiast', pageWidth / 2, y, { align: 'center' });
   y += 8;
 
   // Contact Info
