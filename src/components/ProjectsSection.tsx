@@ -65,6 +65,17 @@ const ProjectsSection = () => {
         result: "100% privacy-preserving document reader with zero server dependency",
       },
     },
+    {
+      title: "Cybernetic Tech Solution",
+      shortDesc: "Premium, sleek website for Cybernetic Tech Solution — a tech internship and career training company based in Sangli, Maharashtra. Multi-page responsive site with 3D scenes, contact form backed by Postgres + Resend email delivery, and a cybernetic / AWS-inspired dark aesthetic with neon accents.",
+      tech: ["React 18", "Vite", "TypeScript", "Tailwind", "Three.js", "Lovable Cloud", "Resend"],
+      liveUrl: "https://cybernetic-launchpad-ten.vercel.app",
+      caseStudy: {
+        problem: "Establish a premium online presence for a tech internship & career training company with a reliable lead-capture pipeline",
+        solution: "Built a multi-page responsive website with interactive Three.js scenes, semantic SEO, and a contact form persisted in Postgres with email delivery via Resend through Supabase Edge Functions",
+        result: "Fully production-ready company website live at cyberneticts.in with a working contact-to-inbox lead pipeline",
+      },
+    },
   ];
 
   return (
