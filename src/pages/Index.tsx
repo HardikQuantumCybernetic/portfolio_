@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import TrustedBy from "@/components/TrustedBy";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 
@@ -13,6 +14,7 @@ const Index = () => {
       <main className="min-h-screen bg-background relative">
         <Navbar />
         <HeroSection />
+        <TrustedBy />
         <Footer />
       </main>
     </motion.div>

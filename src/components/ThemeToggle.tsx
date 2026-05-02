@@ -65,27 +65,39 @@ const ThemeToggle = () => {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="bg-card border-border">
+      <DropdownMenuContent align="end" className="bg-card border-border w-52">
         <DropdownMenuItem
           onClick={() => handleThemeChange("light")}
-          className={`cursor-pointer ${theme === "light" ? "text-primary" : ""}`}
+          className={`cursor-pointer gap-3 py-2 ${theme === "light" ? "text-primary" : ""}`}
         >
-          <Sun className="mr-2 h-4 w-4" />
-          Light
+          <div className="w-10 h-7 rounded border border-border overflow-hidden flex flex-shrink-0 shadow-sm">
+            <div className="flex-1 bg-[#f5efe6]" />
+            <div className="w-2 bg-[#b8552a]" />
+          </div>
+          <Sun className="h-4 w-4" />
+          <span className="flex-1">Light</span>
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => handleThemeChange("dark")}
-          className={`cursor-pointer ${theme === "dark" ? "text-primary" : ""}`}
+          className={`cursor-pointer gap-3 py-2 ${theme === "dark" ? "text-primary" : ""}`}
         >
-          <Moon className="mr-2 h-4 w-4" />
-          Dark
+          <div className="w-10 h-7 rounded border border-border overflow-hidden flex flex-shrink-0 shadow-sm">
+            <div className="flex-1 bg-[#0a0e14]" />
+            <div className="w-2 bg-[#22d3ee]" />
+          </div>
+          <Moon className="h-4 w-4" />
+          <span className="flex-1">Dark</span>
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => handleThemeChange("system")}
-          className={`cursor-pointer ${theme === "system" ? "text-primary" : ""}`}
+          className={`cursor-pointer gap-3 py-2 ${theme === "system" ? "text-primary" : ""}`}
         >
-          <Monitor className="mr-2 h-4 w-4" />
-          System
+          <div className="w-10 h-7 rounded border border-border overflow-hidden flex flex-shrink-0 shadow-sm">
+            <div className="flex-1 bg-[#f5efe6]" />
+            <div className="flex-1 bg-[#0a0e14]" />
+          </div>
+          <Monitor className="h-4 w-4" />
+          <span className="flex-1">System</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
