@@ -3,35 +3,35 @@ import { GraduationCap, Code, Rocket, Award, Briefcase, Sparkles } from "lucide-
 
 const events = [
   {
-    year: "2022",
+    year: "2023-24",
     title: "Diploma in Computer Engineering",
     place: "Sangli, Maharashtra",
     desc: "Started formal training in computer science fundamentals, programming, and networks.",
     icon: GraduationCap,
   },
   {
-    year: "2023",
+    year: "2023-24",
     title: "First Web Projects & Open Source",
     place: "Self-taught · React, Node",
     desc: "Built early projects (Kuber, hardik-dental) and contributed to open-source repos on GitHub.",
     icon: Code,
   },
   {
-    year: "2024",
+    year: "2024-25",
     title: "Research Paper Published",
     place: "IJRAR International Journal",
     desc: "Co-authored a paper on Ethical Hacking, Attack Vectors & Web Penetration Testing.",
     icon: Award,
   },
   {
-    year: "2024",
+    year: "2024-25",
     title: "Freelance Web Developer",
     place: "Remote · Worldwide clients",
     desc: "Started taking international freelance contracts — full-stack apps, dashboards, landing pages.",
     icon: Briefcase,
   },
   {
-    year: "2025",
+    year: "2025-26",
     title: "Built DocReader",
     place: "Open-source · Privacy-first",
     desc: "Shipped a fully client-side document reader with TTS, OCR, EPUB navigation, and WAV export.",
