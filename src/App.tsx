@@ -12,6 +12,9 @@ import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import HireMe from "./pages/HireMe";
 import NotFound from "./pages/NotFound";
+import CaseStudy from "./pages/CaseStudy";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import Scene3D from "./components/Scene3D";
 import { GlowingOrb } from "./components/MagneticCursor";
 import PageLoader from "./components/PageLoader";
@@ -84,6 +87,9 @@ const AnimatedRoutes = () => {
           <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/hire-me" element={<HireMe />} />
+          <Route path="/case-study/:slug" element={<CaseStudy />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AnimatePresence>
