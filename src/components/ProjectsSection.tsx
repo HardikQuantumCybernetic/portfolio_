@@ -1,4 +1,6 @@
-import { ExternalLink, Github, Monitor, Maximize2 } from "lucide-react";
+import { ExternalLink, Github, Monitor, Maximize2, BookOpen } from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,7 +10,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+const screenshotUrl = (url: string) =>
+  `https://image.thum.io/get/width/800/crop/500/noanimate/${url}`;
+
+const caseStudySlugs: Record<string, string> = {
+  "hardik-dental": "hardik-dental",
+  "portfolio": "portfolio",
+  "Cybernetic Tech Solution": "cybernetic-tech-solution",
+};
+
 const ProjectsSection = () => {
+  const [hovered, setHovered] = useState<string | null>(null);
   const projects: Array<{
     title: string;
     shortDesc: string;
