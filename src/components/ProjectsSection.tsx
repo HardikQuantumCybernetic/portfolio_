@@ -1,4 +1,6 @@
-import { ExternalLink, Github, Monitor, Maximize2 } from "lucide-react";
+import { ExternalLink, Github, Monitor, Maximize2, BookOpen } from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,7 +10,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+const screenshotUrl = (url: string) =>
+  `https://image.thum.io/get/width/800/crop/500/noanimate/${url}`;
+
+const caseStudySlugs: Record<string, string> = {
+  "hardik-dental": "hardik-dental",
+  "portfolio": "portfolio",
+  "Cybernetic Tech Solution": "cybernetic-tech-solution",
+};
+
 const ProjectsSection = () => {
+  const [hovered, setHovered] = useState<string | null>(null);
   const projects: Array<{
     title: string;
     shortDesc: string;
@@ -171,16 +183,29 @@ const ProjectsSection = () => {
                   </div>
                 </div>
 
-                {/* Iframe Preview */}
-                <div className="relative h-48 overflow-hidden">
-                  <iframe
-                    src={project.liveUrl}
-                    title={`${project.title} preview`}
-                    className="w-full h-[400px] border-0 scale-[0.5] origin-top-left pointer-events-none"
-                    style={{ width: "200%", height: "400px" }}
-                    loading="lazy"
-                    sandbox="allow-scripts allow-same-origin"
-                  />
+                {/* Screenshot/Iframe Preview */}
+                <div
+                  className="relative h-48 overflow-hidden bg-background"
+                  onMouseEnter={() => setHovered(project.title)}
+                  onMouseLeave={() => setHovered((h) => (h === project.title ? null : h))}
+                >
+                  {hovered === project.title ? (
+                    <iframe
+                      src={project.liveUrl}
+                      title={`${project.title} preview`}
+                      className="w-full h-[400px] border-0 scale-[0.5] origin-top-left pointer-events-none"
+                      style={{ width: "200%", height: "400px" }}
+                      loading="lazy"
+                      sandbox="allow-scripts allow-same-origin"
+                    />
+                  ) : (
+                    <img
+                      src={screenshotUrl(project.liveUrl)}
+                      alt={`${project.title} screenshot`}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-card pointer-events-none" />
                   
                   {/* Hover Overlay */}
@@ -321,6 +346,19 @@ const ProjectsSection = () => {
                       Live Demo
                     </a>
                   </Button>
+                  {caseStudySlugs[project.title] && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="gap-2 text-primary hover:bg-primary/10"
+                      asChild
+                    >
+                      <Link to={`/case-study/${caseStudySlugs[project.title]}`}>
+                        <BookOpen className="w-4 h-4" />
+                        Case Study
+                      </Link>
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
