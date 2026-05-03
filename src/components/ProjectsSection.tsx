@@ -346,6 +346,19 @@ const ProjectsSection = () => {
                       Live Demo
                     </a>
                   </Button>
+                  {caseStudySlugs[project.title] && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="gap-2 text-primary hover:bg-primary/10"
+                      asChild
+                    >
+                      <Link to={`/case-study/${caseStudySlugs[project.title]}`}>
+                        <BookOpen className="w-4 h-4" />
+                        Case Study
+                      </Link>
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
