@@ -183,16 +183,29 @@ const ProjectsSection = () => {
                   </div>
                 </div>
 
-                {/* Iframe Preview */}
-                <div className="relative h-48 overflow-hidden">
-                  <iframe
-                    src={project.liveUrl}
-                    title={`${project.title} preview`}
-                    className="w-full h-[400px] border-0 scale-[0.5] origin-top-left pointer-events-none"
-                    style={{ width: "200%", height: "400px" }}
-                    loading="lazy"
-                    sandbox="allow-scripts allow-same-origin"
-                  />
+                {/* Screenshot/Iframe Preview */}
+                <div
+                  className="relative h-48 overflow-hidden bg-background"
+                  onMouseEnter={() => setHovered(project.title)}
+                  onMouseLeave={() => setHovered((h) => (h === project.title ? null : h))}
+                >
+                  {hovered === project.title ? (
+                    <iframe
+                      src={project.liveUrl}
+                      title={`${project.title} preview`}
+                      className="w-full h-[400px] border-0 scale-[0.5] origin-top-left pointer-events-none"
+                      style={{ width: "200%", height: "400px" }}
+                      loading="lazy"
+                      sandbox="allow-scripts allow-same-origin"
+                    />
+                  ) : (
+                    <img
+                      src={screenshotUrl(project.liveUrl)}
+                      alt={`${project.title} screenshot`}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-card pointer-events-none" />
                   
                   {/* Hover Overlay */}
