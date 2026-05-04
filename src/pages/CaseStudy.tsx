@@ -1,4 +1,4 @@
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -6,11 +6,12 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { getCaseStudy } from "@/data/caseStudies";
+import NotFound from "./NotFound";
 
 const CaseStudyPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const cs = slug ? getCaseStudy(slug) : undefined;
-  if (!cs) return <Navigate to="/projects" replace />;
+  if (!cs) return <NotFound />;
 
   return (
     <PageTransition>

@@ -1,15 +1,16 @@
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { getPost } from "@/data/blog";
+import NotFound from "./NotFound";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const post = slug ? getPost(slug) : undefined;
-  if (!post) return <Navigate to="/blog" replace />;
+  if (!post) return <NotFound />;
 
   return (
     <PageTransition>
