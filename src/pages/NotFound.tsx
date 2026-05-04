@@ -1,8 +1,18 @@
 import { useLocation, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Home, ArrowLeft } from "lucide-react";
+import { Home, ArrowLeft, FolderGit2 } from "lucide-react";
 import SpaceShooter from "@/components/SpaceShooter";
+
+const setMeta = (name: string, content: string) => {
+  let el = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null;
+  if (!el) {
+    el = document.createElement("meta");
+    el.setAttribute("name", name);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("content", content);
+};
 
 const jokes = [
   "404: This page is on a coffee break ☕",
@@ -27,7 +37,15 @@ const NotFound = () => {
     const id = setInterval(() => {
       setJoke(jokes[Math.floor(Math.random() * jokes.length)]);
     }, 5000);
-    return () => clearInterval(id);
+
+    const prevTitle = document.title;
+    document.title = "404 — Page Not Found | Hardik Jadhav";
+    setMeta("description", "The page you're looking for doesn't exist. Head back home or play a quick space-shooter while you're here.");
+    setMeta("robots", "noindex, follow");
+    return () => {
+      clearInterval(id);
+      document.title = prevTitle;
+    };
   }, [location.pathname]);
 
   return (
@@ -66,6 +84,13 @@ const NotFound = () => {
             >
               <Home className="w-4 h-4" />
               Take me home
+            </Link>
+            <Link
+              to="/projects"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-primary/40 text-primary hover:bg-primary/10 transition-colors"
+            >
+              <FolderGit2 className="w-4 h-4" />
+              View Projects
             </Link>
             <button
               onClick={() => window.history.back()}
