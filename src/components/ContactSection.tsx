@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Mail, Linkedin, Github, Phone, Send, MapPin } from "lucide-react";
+import confetti from "canvas-confetti";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
