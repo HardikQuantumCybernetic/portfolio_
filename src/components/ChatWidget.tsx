@@ -180,8 +180,8 @@ const ChatWidget = () => {
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className={cn(
-              "fixed bottom-6 right-6 z-50",
-              "w-[350px] sm:w-[400px] rounded-2xl overflow-hidden",
+              "fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50",
+              "sm:w-[400px] max-w-[calc(100vw-2rem)] rounded-2xl overflow-hidden",
               "bg-card border border-border shadow-2xl shadow-primary/10",
               "flex flex-col"
             )}
