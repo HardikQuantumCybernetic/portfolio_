@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Bot, User, Minimize2, Maximize2 } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User, Minimize2, Maximize2, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -28,8 +28,29 @@ const ChatWidget = () => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hasNewMessage, setHasNewMessage] = useState(false);
+  const [soundOn, setSoundOn] = useState(() => localStorage.getItem("chat_sound") !== "off");
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const playPing = () => {
+    if (!soundOn) return;
+    try {
+      const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const ctx = new AC();
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.frequency.value = 880;
+      o.type = "sine";
+      g.gain.setValueAtTime(0.0001, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
+      o.connect(g).connect(ctx.destination);
+      o.start();
+      o.stop(ctx.currentTime + 0.26);
+    } catch {
+      /* no-op */
+    }
+  };
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -92,6 +113,7 @@ const ChatWidget = () => {
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
+      playPing();
     } catch (error) {
       console.error("Chat error:", error);
       const errorMessage: Message = {
@@ -158,8 +180,8 @@ const ChatWidget = () => {
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className={cn(
-              "fixed bottom-6 right-6 z-50",
-              "w-[350px] sm:w-[400px] rounded-2xl overflow-hidden",
+              "fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50",
+              "sm:w-[400px] max-w-[calc(100vw-2rem)] rounded-2xl overflow-hidden",
               "bg-card border border-border shadow-2xl shadow-primary/10",
               "flex flex-col"
             )}
@@ -176,6 +198,20 @@ const ChatWidget = () => {
                 </div>
               </div>
               <div className="flex items-center gap-1">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                  onClick={() => {
+                    const next = !soundOn;
+                    setSoundOn(next);
+                    localStorage.setItem("chat_sound", next ? "on" : "off");
+                  }}
+                  aria-label={soundOn ? "Mute notifications" : "Unmute notifications"}
+                  title={soundOn ? "Mute" : "Unmute"}
+                >
+                  {soundOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+                </Button>
                 <Button
                   variant="ghost"
                   size="icon"

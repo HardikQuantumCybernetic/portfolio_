@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Mail, Linkedin, Github, Phone, Send, MapPin } from "lucide-react";
+import confetti from "canvas-confetti";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -36,6 +37,13 @@ const ContactSection = () => {
     );
     
     window.location.href = `mailto:hardikjadhav307@gmail.com?subject=${subject}&body=${body}`;
+    
+    // Celebrate 🎉
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.7 },
+    });
     
     toast({
       title: "Opening email client...",
