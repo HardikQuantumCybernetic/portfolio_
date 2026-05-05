@@ -1,30 +1,34 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Tiny canvas-based Space-Invaders style mini-game.
- * Self-contained, no external deps. ~Theme aware (uses CSS vars at draw time).
+ * Canvas-based Space-Invaders style mini-game.
+ * Works on desktop (keyboard) and mobile/tablet (touch buttons).
  */
 const SpaceShooter = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(() =>
     Number(localStorage.getItem("404_high_score") || 0)
   );
   const [gameOver, setGameOver] = useState(false);
   const [started, setStarted] = useState(false);
+
+  const W = 480;
+  const H = 400;
+
   const stateRef = useRef({
     player: { x: 200, y: 360, w: 28, h: 14 },
     bullets: [] as { x: number; y: number }[],
     invaders: [] as { x: number; y: number; alive: boolean }[],
     dir: 1,
+    move: 0, // -1 left, 1 right, 0 idle (touch)
     keys: {} as Record<string, boolean>,
     score: 0,
     over: false,
     raf: 0,
+    lastShot: 0,
   });
-
-  const W = 480;
-  const H = 400;
 
   const resetInvaders = () => {
     const inv: { x: number; y: number; alive: boolean }[] = [];
@@ -42,14 +46,26 @@ const SpaceShooter = () => {
       bullets: [],
       invaders: resetInvaders(),
       dir: 1,
+      move: 0,
       keys: {},
       score: 0,
       over: false,
       raf: 0,
+      lastShot: 0,
     };
     setScore(0);
     setGameOver(false);
     setStarted(true);
+  };
+
+  const shoot = () => {
+    const s = stateRef.current;
+    const now = performance.now();
+    if (s.over) return;
+    if (s.bullets.length >= 4) return;
+    if (now - s.lastShot < 180) return;
+    s.lastShot = now;
+    s.bullets.push({ x: s.player.x + s.player.w / 2 - 1, y: s.player.y });
   };
 
   useEffect(() => {
@@ -68,16 +84,13 @@ const SpaceShooter = () => {
 
     const onKeyDown = (e: KeyboardEvent) => {
       stateRef.current.keys[e.key] = true;
-      if (e.key === " ") e.preventDefault();
+      if (e.key === " " || e.key === "ArrowUp" || e.key === "ArrowDown") e.preventDefault();
     };
     const onKeyUp = (e: KeyboardEvent) => {
       stateRef.current.keys[e.key] = false;
       if (e.key === " ") {
-        // shoot on key release
-        const s = stateRef.current;
-        if (s.bullets.length < 4 && !s.over) {
-          s.bullets.push({ x: s.player.x + s.player.w / 2 - 1, y: s.player.y });
-        }
+        e.preventDefault();
+        shoot();
       }
     };
     window.addEventListener("keydown", onKeyDown);
@@ -86,9 +99,10 @@ const SpaceShooter = () => {
     const tick = () => {
       const s = stateRef.current;
       // input
-      if (s.keys["ArrowLeft"] || s.keys["a"]) s.player.x = Math.max(4, s.player.x - 4);
-      if (s.keys["ArrowRight"] || s.keys["d"])
-        s.player.x = Math.min(W - s.player.w - 4, s.player.x + 4);
+      const left = s.keys["ArrowLeft"] || s.keys["a"] || s.move === -1;
+      const right = s.keys["ArrowRight"] || s.keys["d"] || s.move === 1;
+      if (left) s.player.x = Math.max(4, s.player.x - 4);
+      if (right) s.player.x = Math.min(W - s.player.w - 4, s.player.x + 4);
 
       // bullets
       s.bullets = s.bullets.filter((b) => b.y > -10);
@@ -96,22 +110,24 @@ const SpaceShooter = () => {
 
       // invaders movement
       const alive = s.invaders.filter((i) => i.alive);
-      const minX = Math.min(...alive.map((i) => i.x), Infinity);
-      const maxX = Math.max(...alive.map((i) => i.x + 24), -Infinity);
-      let drop = false;
-      if (maxX > W - 4 && s.dir > 0) {
-        s.dir = -1;
-        drop = true;
-      } else if (minX < 4 && s.dir < 0) {
-        s.dir = 1;
-        drop = true;
+      if (alive.length > 0) {
+        const minX = Math.min(...alive.map((i) => i.x));
+        const maxX = Math.max(...alive.map((i) => i.x + 24));
+        let drop = false;
+        if (maxX > W - 4 && s.dir > 0) {
+          s.dir = -1;
+          drop = true;
+        } else if (minX < 4 && s.dir < 0) {
+          s.dir = 1;
+          drop = true;
+        }
+        s.invaders.forEach((i) => {
+          if (!i.alive) return;
+          i.x += s.dir * 0.6;
+          if (drop) i.y += 10;
+          if (i.y + 20 >= s.player.y) s.over = true;
+        });
       }
-      s.invaders.forEach((i) => {
-        if (!i.alive) return;
-        i.x += s.dir * 0.6;
-        if (drop) i.y += 10;
-        if (i.y + 20 >= s.player.y) s.over = true;
-      });
 
       // collisions
       s.bullets.forEach((b) => {
@@ -131,28 +147,24 @@ const SpaceShooter = () => {
         });
       });
 
-      if (alive.length === 0) {
+      if (s.invaders.every((i) => !i.alive)) {
         s.invaders = resetInvaders();
         s.dir = 1;
       }
 
       // draw
       ctx.clearRect(0, 0, W, H);
-      // bg stars
       ctx.fillStyle = "rgba(255,255,255,0.05)";
       for (let i = 0; i < 30; i++) {
         ctx.fillRect((i * 53) % W, (i * 91) % H, 1, 1);
       }
       const primary = getColor("--primary");
-      // player
       ctx.fillStyle = primary;
       ctx.fillRect(s.player.x, s.player.y, s.player.w, s.player.h);
       ctx.fillRect(s.player.x + s.player.w / 2 - 2, s.player.y - 6, 4, 6);
-      // bullets
       s.bullets.forEach((b) => {
         ctx.fillRect(b.x, b.y, 2, 8);
       });
-      // invaders
       s.invaders.forEach((i) => {
         if (!i.alive) return;
         ctx.fillStyle = primary;
@@ -164,10 +176,13 @@ const SpaceShooter = () => {
 
       if (s.over) {
         setGameOver(true);
-        if (s.score > highScore) {
-          setHighScore(s.score);
-          localStorage.setItem("404_high_score", String(s.score));
-        }
+        setHighScore((prev) => {
+          if (s.score > prev) {
+            localStorage.setItem("404_high_score", String(s.score));
+            return s.score;
+          }
+          return prev;
+        });
         return;
       }
       stateRef.current.raf = requestAnimationFrame(tick);
@@ -179,16 +194,44 @@ const SpaceShooter = () => {
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
     };
-  }, [started, highScore]);
+  }, [started]);
+
+  // Touch drag steering on canvas
+  const onCanvasTouch = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas || !started || stateRef.current.over) return;
+    const rect = canvas.getBoundingClientRect();
+    const t = e.touches[0];
+    if (!t) return;
+    const scaleX = W / rect.width;
+    const x = (t.clientX - rect.left) * scaleX;
+    stateRef.current.player.x = Math.max(
+      4,
+      Math.min(W - stateRef.current.player.w - 4, x - stateRef.current.player.w / 2)
+    );
+  };
+
+  const setMove = (dir: -1 | 0 | 1) => {
+    stateRef.current.move = dir;
+  };
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="relative rounded-xl overflow-hidden border border-primary/40 glow-box bg-black">
+    <div ref={wrapRef} className="flex flex-col items-center gap-3 w-full">
+      <div className="relative rounded-xl overflow-hidden border border-primary/40 glow-box bg-black w-full max-w-[480px]">
         <canvas
           ref={canvasRef}
           width={W}
           height={H}
-          className="block max-w-full h-auto"
+          onTouchStart={(e) => {
+            e.preventDefault();
+            onCanvasTouch(e);
+          }}
+          onTouchMove={(e) => {
+            e.preventDefault();
+            onCanvasTouch(e);
+          }}
+          className="block w-full h-auto touch-none select-none"
+          style={{ aspectRatio: `${W} / ${H}` }}
         />
         {!started && (
           <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center text-center p-6">
@@ -198,8 +241,14 @@ const SpaceShooter = () => {
             <p className="text-sm text-muted-foreground mb-4 max-w-xs">
               Defend the page from invaders.
               <br />
-              <span className="text-primary">←/→</span> to move ·{" "}
-              <span className="text-primary">space</span> to shoot
+              <span className="hidden sm:inline">
+                <span className="text-primary">←/→</span> move ·{" "}
+                <span className="text-primary">space</span> shoot
+              </span>
+              <span className="sm:hidden">
+                Tap <span className="text-primary">canvas</span> to aim ·{" "}
+                <span className="text-primary">FIRE</span> to shoot
+              </span>
             </p>
             <button
               onClick={start}
@@ -225,6 +274,43 @@ const SpaceShooter = () => {
           </div>
         )}
       </div>
+
+      {/* Touch controls — visible on mobile/tablet */}
+      <div className="flex md:hidden items-center justify-between gap-3 w-full max-w-[480px] select-none">
+        <div className="flex gap-2">
+          <button
+            onTouchStart={(e) => { e.preventDefault(); setMove(-1); }}
+            onTouchEnd={(e) => { e.preventDefault(); setMove(0); }}
+            onMouseDown={() => setMove(-1)}
+            onMouseUp={() => setMove(0)}
+            onMouseLeave={() => setMove(0)}
+            className="w-16 h-14 rounded-lg bg-primary/15 border border-primary/40 text-primary text-2xl font-bold active:bg-primary/30 touch-none"
+            aria-label="Move left"
+          >
+            ←
+          </button>
+          <button
+            onTouchStart={(e) => { e.preventDefault(); setMove(1); }}
+            onTouchEnd={(e) => { e.preventDefault(); setMove(0); }}
+            onMouseDown={() => setMove(1)}
+            onMouseUp={() => setMove(0)}
+            onMouseLeave={() => setMove(0)}
+            className="w-16 h-14 rounded-lg bg-primary/15 border border-primary/40 text-primary text-2xl font-bold active:bg-primary/30 touch-none"
+            aria-label="Move right"
+          >
+            →
+          </button>
+        </div>
+        <button
+          onTouchStart={(e) => { e.preventDefault(); shoot(); }}
+          onClick={() => shoot()}
+          className="px-6 h-14 rounded-lg bg-primary text-primary-foreground font-bold tracking-wider active:opacity-80 touch-none"
+          aria-label="Shoot"
+        >
+          FIRE
+        </button>
+      </div>
+
       <div className="flex gap-6 text-xs text-muted-foreground font-mono">
         <span>SCORE: <span className="text-primary">{score}</span></span>
         <span>HIGH: <span className="text-primary">{highScore}</span></span>
