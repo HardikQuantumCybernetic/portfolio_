@@ -113,6 +113,7 @@ const ChatWidget = () => {
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
+      playPing();
     } catch (error) {
       console.error("Chat error:", error);
       const errorMessage: Message = {
@@ -197,6 +198,20 @@ const ChatWidget = () => {
                 </div>
               </div>
               <div className="flex items-center gap-1">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                  onClick={() => {
+                    const next = !soundOn;
+                    setSoundOn(next);
+                    localStorage.setItem("chat_sound", next ? "on" : "off");
+                  }}
+                  aria-label={soundOn ? "Mute notifications" : "Unmute notifications"}
+                  title={soundOn ? "Mute" : "Unmute"}
+                >
+                  {soundOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+                </Button>
                 <Button
                   variant="ghost"
                   size="icon"
