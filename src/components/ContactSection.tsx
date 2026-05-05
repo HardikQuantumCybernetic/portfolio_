@@ -38,6 +38,13 @@ const ContactSection = () => {
     
     window.location.href = `mailto:hardikjadhav307@gmail.com?subject=${subject}&body=${body}`;
     
+    // Celebrate 🎉
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.7 },
+    });
+    
     toast({
       title: "Opening email client...",
       description: "Your email app will open with the message pre-filled.",
