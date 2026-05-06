@@ -1,180 +1,183 @@
 # Hardik's Portfolio Website
 
-A modern, interactive portfolio website built with React, TypeScript, and Three.js featuring 3D elements, smooth animations, and a stunning visual experience.
+A modern, interactive portfolio website built with **React 18**, **TypeScript**, **Vite**, **Tailwind CSS**, and **Three.js** — featuring a 3D background, a Gemini-powered AI chatbot, case studies, a blog, and a playable 404 page.
 
 ![Portfolio Preview](public/favicon.png)
 
 ## ✨ Features
 
-- **3D Interactive Background** - Floating geometric shapes and mouse-following particles
-- **Theme Support** - Dark (teal/cyan) and Light (rusty old-money) color schemes
-- **Smooth Animations** - Page transitions, parallax scrolling, and micro-interactions
-- **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
-- **Multi-language Support** - English, Hindi, and Marathi
-- **Dynamic Resume Generation** - PDF resume generated from portfolio data
-- **Live Project Previews** - Embedded iframe previews of live projects
-- **SEO Optimized** - Structured data, meta tags, and semantic HTML
+### Core
+- **3D Interactive Background** — floating geometric shapes and mouse-following particles (Three.js / React Three Fiber)
+- **Dual Theme** — Dark (electric teal/cyan) and Light (rusty old-money), with system detection
+- **Multi-language Support** — English, Hindi, Marathi
+- **Page Transitions** — fade/slide route animations via Framer Motion
+- **Responsive Design** — works on mobile, tablet, and desktop
+- **SEO Optimized** — JSON-LD structured data, Open Graph image, semantic HTML, robots config
+
+### Content & Engagement
+- **Hero Section** — rotating typewriter tagline with primary "Hire Me" + secondary "View Projects" CTAs
+- **Trusted By Strip** — social-proof client/brand logos above the fold
+- **Interactive Resume Timeline** — animated vertical timeline of education and journey
+- **Case Study Pages** — Problem → Solution → Result narratives at `/case-study/:slug`
+- **Blog System** — index at `/blog` and detail pages at `/blog/:slug`
+- **Project Cards** — static screenshot fallback (via thum.io) with live iframe preview on hover
+- **Achievements Wall** — clickable certificate modals
+- **Testimonials Section** — client and peer quotes
+- **Hire Me Page** — services and transparent pricing ($5/page)
+- **Dynamic Resume Generation** — PDF generated from portfolio data via jsPDF
+- **Background Music** — optional ambient audio (Cosmic Om Resonance)
+
+### Interactivity
+- **AI Chatbot ("Hardik AI")** — Gemini 2.0 Flash via Supabase Edge Function, with thinking animation, sound toggle, and `localStorage` preference
+- **Confetti** — celebration burst on contact form submit (canvas-confetti)
+- **Magnetic Cursor & Interactive Cards** — micro-interactions
+- **Scroll Progress Bar**
+- **Playable 404 Page** — Space Shooter mini-game with persistent best score (`localStorage`), touch controls for mobile, plus rotating jokes
+- **404 CTAs** — Home, Projects, and Go-Back buttons; renders for invalid `/case-study/*` and `/blog/*` slugs too
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ 
-- npm or yarn
+- Node.js 18+
+- npm, bun, or yarn
 
 ### Installation
 
 ```bash
-# Clone the repository
 git clone https://github.com/HardikQuantumCybernetic/portfolio.git
-
-# Navigate to project directory
 cd portfolio
-
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
 ```
 
-The app will be running at `http://localhost:5173`
+App runs at `http://localhost:5173`.
 
-### Build for Production
+### Build
 
 ```bash
-# Create production build
-npm run build
-
-# Preview production build
-npm run preview
+npm run build      # production build
+npm run preview    # preview production build
 ```
 
 ## 🛠️ Tech Stack
 
 | Technology | Purpose |
 |------------|---------|
-| **React 18** | UI Framework |
-| **TypeScript** | Type Safety |
-| **Vite** | Build Tool & Dev Server |
-| **Tailwind CSS** | Styling |
-| **Framer Motion** | Animations |
-| **Three.js / React Three Fiber** | 3D Graphics |
-| **Shadcn/ui** | UI Components |
-| **React Router** | Navigation |
-| **jsPDF** | Resume Generation |
+| React 18 + TypeScript | UI framework |
+| Vite | Build tool & dev server |
+| Tailwind CSS + Shadcn/ui | Styling & components |
+| Framer Motion | Animations & page transitions |
+| Three.js / React Three Fiber / Drei | 3D background |
+| React Router | Client-side routing |
+| jsPDF | Resume generation |
+| canvas-confetti | Form-submit celebration |
+| Supabase (Lovable Cloud) | Edge Functions for AI chatbot |
+| Google Gemini 2.0 Flash | Chatbot LLM (via Lovable AI Gateway) |
 
 ## 📁 Project Structure
 
 ```
 src/
-├── assets/              # Images and static files
-│   ├── certificates/    # Achievement certificates
-│   └── hardik.jpg       # Profile photo
-├── components/          # React components
-│   ├── ui/              # Shadcn UI components
-│   ├── HeroSection.tsx  # Landing hero
-│   ├── AboutSection.tsx # About me content
-│   ├── SkillsSection.tsx# Skills display
-│   ├── ProjectsSection.tsx # Projects showcase
-│   ├── ContactSection.tsx  # Contact form
-│   ├── Scene3D.tsx      # 3D background
-│   ├── Navbar.tsx       # Navigation
-│   ├── Footer.tsx       # Footer links
+├── assets/                   # Images, certificates, profile photo
+├── components/
+│   ├── ui/                   # Shadcn primitives (do not modify directly)
+│   ├── HeroSection.tsx
+│   ├── AboutSection.tsx
+│   ├── SkillsSection.tsx
+│   ├── ProjectsSection.tsx
+│   ├── ContactSection.tsx
+│   ├── ResumeTimeline.tsx
+│   ├── Testimonials.tsx
+│   ├── TrustedBy.tsx
+│   ├── ChatWidget.tsx        # Gemini-powered AI bot
+│   ├── SpaceShooter.tsx      # 404 mini-game
+│   ├── Scene3D.tsx           # Global 3D background
+│   ├── PageTransition.tsx
+│   ├── Navbar.tsx / Footer.tsx
 │   └── ...
-├── pages/               # Page components
-│   ├── Index.tsx        # Home page
-│   ├── About.tsx        # About page
-│   ├── Skills.tsx       # Skills page
-│   ├── Projects.tsx     # Projects page
-│   ├── Contact.tsx      # Contact page
-│   └── HireMe.tsx       # Hire me page
-├── hooks/               # Custom React hooks
-├── utils/               # Utility functions
-│   └── generateResume.ts# PDF resume generator
-├── lib/                 # Library utilities
-├── App.tsx              # Main app component
-├── main.tsx             # Entry point
-└── index.css            # Global styles & design tokens
+├── pages/
+│   ├── Index.tsx             # Home (Hero + Footer only)
+│   ├── About.tsx             # About + Timeline + Testimonials
+│   ├── Skills.tsx
+│   ├── Projects.tsx
+│   ├── CaseStudy.tsx         # /case-study/:slug
+│   ├── Blog.tsx              # /blog
+│   ├── BlogPost.tsx          # /blog/:slug
+│   ├── Contact.tsx
+│   ├── HireMe.tsx
+│   └── NotFound.tsx          # Playable 404
+├── data/
+│   ├── caseStudies.ts
+│   └── blog.ts
+├── integrations/supabase/    # Auto-generated client + types
+├── hooks/
+├── utils/generateResume.ts
+├── lib/utils.ts
+├── App.tsx
+├── main.tsx
+└── index.css                 # Design tokens (HSL semantic variables)
+
+supabase/
+└── functions/ai-chat/        # Gemini-powered Edge Function
 ```
 
 ## 🎨 Customization
 
-### Updating Personal Information
+### Personal Info
+- **Profile Photo** — `src/assets/hardik.jpg`
+- **Certificates** — `src/assets/certificates/`
+- **Contact links** — `Footer.tsx`, `ContactSection.tsx`
+- **Projects** — `src/components/ProjectsSection.tsx`
+- **Case Studies** — `src/data/caseStudies.ts`
+- **Blog Posts** — `src/data/blog.ts`
+- **Skills** — `src/components/SkillsSection.tsx`
+- **Resume content** — `src/utils/generateResume.ts`
 
-1. **Profile Photo**: Replace `src/assets/hardik.jpg`
-2. **Certificates**: Add/replace images in `src/assets/certificates/`
-3. **Contact Info**: Update links in `Footer.tsx` and `ContactSection.tsx`
-4. **Projects**: Modify project data in `ProjectsSection.tsx`
-5. **Skills**: Update skills in `SkillsSection.tsx`
-6. **Resume**: Modify content in `src/utils/generateResume.ts`
+### Theme & Tokens
+All colors are HSL semantic tokens. Edit:
+- `src/index.css` — CSS variables for `:root` and `.dark`
+- `tailwind.config.ts` — extend tokens, animations, fonts
 
-### Theme Customization
+> **Never** use direct color classes (`text-white`, `bg-purple-500`). Always use semantic tokens (`text-foreground`, `bg-primary`, etc.).
 
-Edit `src/index.css` to modify:
-- Color palette (primary, secondary, accent colors)
-- Typography (font families, sizes)
-- Spacing and layout variables
-
-Edit `tailwind.config.ts` to extend:
-- Custom colors
-- Animation keyframes
-- Font configurations
-
-### 3D Elements
-
-Modify `src/components/Scene3D.tsx` to:
-- Change floating shapes
-- Adjust particle count and behavior
-- Modify theme-based colors
+### AI Chatbot
+The chatbot calls the `ai-chat` Supabase Edge Function (`supabase/functions/ai-chat/index.ts`). The model is wired through the Lovable AI Gateway — no extra API keys needed locally when using Lovable Cloud.
 
 ## 🌐 Deployment
 
-### Lovable (Recommended)
-1. Push changes to GitHub
-2. Open [Lovable](https://lovable.dev)
-3. Click Share → Publish
+### Lovable
+Open the project in [Lovable](https://lovable.dev) → Share → Publish.
 
 ### Vercel
+SPA rewrites are configured in `vercel.json` so deep links like `/blog/foo` and `/case-study/bar` work after refresh.
+
 ```bash
 npm i -g vercel
 vercel
 ```
 
-### Netlify
+### Netlify / Static Hosts
 ```bash
 npm run build
-# Drag 'dist' folder to Netlify
+# deploy the 'dist' folder
 ```
-
-### Self-Hosting
-```bash
-npm run build
-# Serve the 'dist' folder with any static server
-npx serve dist
-```
+Ensure your host rewrites unknown routes to `index.html`.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
+See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines. Quick version:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Fork → branch (`feature/your-feature`)
+2. Use semantic tokens, test both themes & viewports
+3. Conventional commits (`feat:`, `fix:`, `docs:`…)
+4. Open a PR using the template
 
-### Development Guidelines
-
-- Follow existing code style and patterns
-- Use TypeScript for type safety
-- Use Tailwind semantic tokens (not direct colors)
-- Test on both dark and light themes
-- Ensure mobile responsiveness
+Issue templates live in `.github/ISSUE_TEMPLATE/`.
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
+MIT — see [LICENSE](LICENSE).
 
 ## 📞 Contact
 
@@ -182,21 +185,6 @@ This project is open source and available under the [MIT License](LICENSE).
 - **LinkedIn**: [Hardik Jadhav](https://www.linkedin.com/in/hardik-jadhav-500b48301/)
 - **GitHub**: [HardikQuantumCybernetic](https://github.com/HardikQuantumCybernetic)
 - **WhatsApp**: [+91 8080950921](https://wa.me/918080950921)
-
-## 💡 Suggestions for Improvement
-
-Here are some features you can add to enhance customer interaction:
-
-1. **Live Chat Widget** - Add a chat bubble for real-time communication
-2. **Blog Section** - Share technical articles and tutorials
-3. **Newsletter Signup** - Build an email list for updates
-4. **Project Case Studies** - Detailed breakdowns of featured work
-5. **Interactive Skills Chart** - Visual skill proficiency display
-6. **Client Portal** - Dashboard for project tracking
-7. **Scheduling Integration** - Calendly or similar for booking calls
-8. **Testimonials Carousel** - More social proof from clients
-9. **Analytics Dashboard** - Track visitor engagement
-10. **Multi-currency Pricing** - Display prices in user's currency
 
 ---
 
