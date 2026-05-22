@@ -12,3 +12,7 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Allow: /
+
+Sitemap: https://cybernatic.vercel.app/sitemap.xml
