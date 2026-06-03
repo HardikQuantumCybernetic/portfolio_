@@ -4,6 +4,7 @@ import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { getCaseStudy } from "@/data/caseStudies";
 import NotFound from "./NotFound";
@@ -15,6 +16,20 @@ const CaseStudyPage = () => {
 
   return (
     <PageTransition>
+      <SEO
+        title={`${cs.title} — Case Study | Hardik Jadhav`}
+        description={cs.tagline}
+        path={`/case-study/${slug}`}
+        type="article"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: cs.title,
+          description: cs.tagline,
+          author: { "@type": "Person", name: "Hardik Jadhav" },
+          keywords: cs.stack.join(", "),
+        }}
+      />
       <div className="min-h-screen bg-background relative z-10">
         <Navbar />
         <article className="container mx-auto px-6 pt-28 pb-20 max-w-4xl">
