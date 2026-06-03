@@ -4,6 +4,7 @@ import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
+import SEO from "@/components/SEO";
 import { getPost } from "@/data/blog";
 import NotFound from "./NotFound";
 
@@ -14,6 +15,21 @@ const BlogPost = () => {
 
   return (
     <PageTransition>
+      <SEO
+        title={`${post.title} — Hardik Jadhav`}
+        description={post.excerpt}
+        path={`/blog/${post.slug}`}
+        type="article"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: post.title,
+          description: post.excerpt,
+          datePublished: post.date,
+          author: { "@type": "Person", name: "Hardik Jadhav" },
+          keywords: post.tags.join(", "),
+        }}
+      />
       <div className="min-h-screen bg-background relative z-10">
         <Navbar />
         <article className="container mx-auto px-6 pt-28 pb-20 max-w-3xl">

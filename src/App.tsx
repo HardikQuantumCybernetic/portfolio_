@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Skills from "./pages/Skills";
@@ -97,15 +98,27 @@ const AnimatedRoutes = () => {
   );
 };
 
+const DefaultCanonical = () => {
+  const { pathname } = useLocation();
+  return (
+    <Helmet>
+      <link rel="canonical" href={`https://cybernatic.vercel.app${pathname}`} />
+      <meta property="og:url" content={`https://cybernatic.vercel.app${pathname}`} />
+    </Helmet>
+  );
+};
+
 const AppContent = () => {
   return (
     <>
       <ScrollToTop />
+      <DefaultCanonical />
       <ScrollProgress />
       <AnimatedRoutes />
     </>
   );
 };
+
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
