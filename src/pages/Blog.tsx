@@ -3,12 +3,18 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
+import SEO from "@/components/SEO";
 import { blogPosts } from "@/data/blog";
 import { Calendar, Clock } from "lucide-react";
 
 const Blog = () => {
   return (
     <PageTransition>
+      <SEO
+        title="Blog — Hardik Jadhav | Notes on web dev & cybertech"
+        description="Articles by Hardik Jadhav on React, full-stack development, cybersecurity, and founding Cybernetic Tech Solution."
+        path="/blog"
+      />
       <div className="min-h-screen bg-background relative z-10">
         <Navbar />
         <main className="container mx-auto px-6 pt-28 pb-20 max-w-4xl">
