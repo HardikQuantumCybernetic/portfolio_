@@ -98,15 +98,27 @@ const AnimatedRoutes = () => {
   );
 };
 
+const DefaultCanonical = () => {
+  const { pathname } = useLocation();
+  return (
+    <Helmet>
+      <link rel="canonical" href={`https://cybernatic.vercel.app${pathname}`} />
+      <meta property="og:url" content={`https://cybernatic.vercel.app${pathname}`} />
+    </Helmet>
+  );
+};
+
 const AppContent = () => {
   return (
     <>
       <ScrollToTop />
+      <DefaultCanonical />
       <ScrollProgress />
       <AnimatedRoutes />
     </>
   );
 };
+
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
